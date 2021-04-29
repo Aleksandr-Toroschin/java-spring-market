@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html ng-app="app">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.0/angular.min.js"></script>
+    <script src="index.js"></script>
+    <title>Market</title>
+</head>
+<body>
+<h1>Market</h1>
+<div class="container" ng-controller="indexController">
+    <h1>April Market</h1>
+    <div>
+        <div ng-repeat="p in products">
+            <a>{{p.id}}</a>
+            <a>{{p.title}}</a>
+            <a>{{p.cost}}</a>
+        </div>
+    </div>
+
+    <button class="btn btn-primary" ng-click="init()">Refresh</button>
+    <a class="btn btn-primary" href={{addPage}}>Добавить товар</a>
+</div>
+</body>
+</html>
