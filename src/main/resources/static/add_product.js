@@ -8,13 +8,19 @@ angular.module('app', []).controller('addController', function ($scope, $http) {
     };
 
     $scope.addProduct = function() {
-        var title = document.getElementById("titleField").value;
-        var cost = document.getElementById("costField").value;
-        const body = {"title": title, "cost": cost};
-
-        $http.post(contextPath + '/api/v1/products', body)
-            .then(function (response) {
+        // var title = document.getElementById("titleField").value;
+        // var cost = document.getElementById("costField").value;
+        // const body = {"title": title, "cost": cost};
+        // $http.post(contextPath + '/api/v1/products', $scope.newProduct)
+        //     .then(function (response) {
+        //         // $scope.newProduct = null;
+        //         location.replace(contextPath);
+        //     });
+        $http.post(contextPath + '/api/v1/products', $scope.newProduct)
+            .then(function successCallback(response) {
                 location.replace(contextPath);
+            }, function errorCallback(response) {
+                alert('Error!');
             });
     };
 
