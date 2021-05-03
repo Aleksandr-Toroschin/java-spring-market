@@ -21,19 +21,50 @@
             <th>ID</th>
             <th>Title</th>
             <th>Price</th>
+            <th>Cart</th>
         </tr>
         </thead>
         <tbody>
         <tr ng-repeat="p in products">
             <td>{{p.id}}</td>
-            <td>{{p.title}}</td>
+            <td>
+                <a href={{infoPage+p.id}}>{{p.title}}</a>
+            </td>
             <td>{{p.cost}}</td>
+            <td>
+                <button class="btn btn-success" ng-click="addProductInCart(p.id)">Добавить в корзину</button>
+            </td>
         </tr>
         </tbody>
     </table>
 
     <button class="btn btn-primary" ng-click="init()">Refresh</button>
-    <a class="btn btn-primary" href={{addPage}}>Добавить товар</a>
+    <a class="btn btn-success" href={{addPage}}>Добавить товар</a>
+
+    <br>
+    <H2>Корзина (сумма={{sum}})</H2>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Title</th>
+            <th>Price</th>
+            <th>Cart</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="p in cartProducts">
+            <td>{{p.id}}</td>
+            <td>{{p.title}}</td>
+            <td>{{p.cost}}</td>
+            <td>
+                <button class="btn btn-danger" ng-click="deleteProductFromCart(p.id)">Удалить из корзины</button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <button class="btn btn-danger" ng-click="deleteAllFromCart()">Очистить корзину</button>
+
 </div>
 </body>
 </html>
