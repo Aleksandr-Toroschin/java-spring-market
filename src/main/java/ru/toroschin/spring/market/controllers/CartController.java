@@ -3,10 +3,8 @@ package ru.toroschin.spring.market.controllers;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
-import ru.toroschin.spring.market.models.Product;
+import ru.toroschin.spring.market.dtos.CartDto;
 import ru.toroschin.spring.market.services.CartService;
-
-import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -22,8 +20,8 @@ public class CartController {
     }
 
     @GetMapping
-    public List<Product> getAllProducts() {
-        return cartService.getAllProducts();
+    public CartDto getCart() {
+        return cartService.getCart();
     }
 
     @DeleteMapping
@@ -32,9 +30,9 @@ public class CartController {
         log.info("Удален продукт c id: " + id);
     }
 
-    @DeleteMapping("/del")
-    public void deleteProduct() {
-        cartService.deleteAllProducts();
+    @DeleteMapping("/clear")
+    public void clearCart() {
+        cartService.clearCart();
         log.info("Очищена корзина");
     }
 

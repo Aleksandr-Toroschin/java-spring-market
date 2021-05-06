@@ -2,15 +2,15 @@ package ru.toroschin.spring.market.models;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import ru.toroschin.spring.market.dtos.ProductDto;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
-@NoArgsConstructor
+@Table(name = "categories")
 @Data
-@Table(name = "products")
-public class Product {
+@NoArgsConstructor
+public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -19,10 +19,6 @@ public class Product {
     @Column(name = "title")
     private String title;
 
-    @Column(name = "cost")
-    private int cost;
-
-    @ManyToOne
-    @JoinColumn(name = "category_id")
-    private Category category;
+    @OneToMany(mappedBy = "category")
+    private List<Product> products;
 }

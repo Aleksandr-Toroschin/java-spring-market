@@ -1,5 +1,6 @@
 angular.module('app', []).controller('addController', function ($scope, $http) {
-    const contextPath = 'http://localhost:8189/market';
+    // const contextPath = 'http://localhost:8189/market';
+    const contextPath = '/market';
 
     $scope.init = function () {
         $scope.title = "";
