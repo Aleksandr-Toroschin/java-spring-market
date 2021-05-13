@@ -1,7 +1,9 @@
-package ru.toroschin.spring.market.models;
+package ru.toroschin.spring.market.utils;
 
 import lombok.Data;
 import org.springframework.stereotype.Component;
+import ru.toroschin.spring.market.models.Product;
+
 import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.Collections;

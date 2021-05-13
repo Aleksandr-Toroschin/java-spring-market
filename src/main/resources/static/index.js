@@ -1,8 +1,7 @@
-angular.module('app', []).controller('indexController', function ($scope, $http) {
-    // const contextPath = 'http://localhost:8189/market';
+angular.module('app', ['ngStorage']).controller('indexController', function ($scope, $http, $location, $localStorage) {
     const contextPath = '/market';
 
-    $scope.init = function (page) {
+    $scope.showProducts = function (page) {
         $scope.addProductPage = contextPath + '/add_product.html';
         $scope.infoPage = contextPath + '/api/v1/products/';
         $http({
@@ -26,7 +25,6 @@ angular.module('app', []).controller('indexController', function ($scope, $http)
 
             $scope.paginationArray = $scope.generatePagesIndexes(minPageIndex, maxPageIndex);
         });
-        $scope.showCart();
     };
 
     $scope.generatePagesIndexes = function (startPage, endPage) {
@@ -77,5 +75,50 @@ angular.module('app', []).controller('indexController', function ($scope, $http)
         });
     };
 
-    $scope.init(1);
+    $scope.tryToAuth = function () {
+        $scope.login = $scope.user.username;
+        $http.post(contextPath + '/auth', $scope.user)
+            .then(function successCallback(response) {
+                    if (response.data.token) {
+                        $http.defaults.headers.common.Authorization = 'Bearer ' + response.data.token;
+                        $localStorage.marketCurrentUser = {
+                            username: $scope.user.username,
+                            token: response.data.token
+                        };
+                        $scope.user.username = null;
+                        $scope.user.password = null;
+                    }
+                }, function errorCallback(response) {
+                    alert("неверный логин или пароль");
+                    $scope.user.username = null;
+                    $scope.user.password = null;
+                }
+            );
+    };
+
+    $scope.isUserLoggedIn = function () {
+        if ($localStorage.marketCurrentUser) {
+            return true;
+        } else {
+            return false;
+        }
+    };
+
+    $scope.tryToLogout = function () {
+        $scope.clearUser();
+    };
+
+    $scope.clearUser = function () {
+        delete $localStorage.marketCurrentUser;
+        $http.defaults.headers.common.Authorization = '';
+        $scope.login = '';
+    };
+
+    if ($localStorage.marketCurrentUser) {
+        $scope.login = $localStorage.marketCurrentUser.username;
+        $http.defaults.headers.common.Authorization = 'Bearer ' + $localStorage.marketCurrentUser.token;
+    }
+
+    $scope.showProducts(1);
+    $scope.showCart();
 });

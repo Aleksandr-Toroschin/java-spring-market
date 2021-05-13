@@ -3,7 +3,7 @@ package ru.toroschin.spring.market.services;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.toroschin.spring.market.dtos.CartDto;
-import ru.toroschin.spring.market.models.Cart;
+import ru.toroschin.spring.market.utils.Cart;
 import ru.toroschin.spring.market.models.Product;
 
 import java.util.Optional;

@@ -2,7 +2,7 @@ package ru.toroschin.spring.market.dtos;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import ru.toroschin.spring.market.models.Cart;
+import ru.toroschin.spring.market.utils.Cart;
 
 import java.util.List;
 import java.util.stream.Collectors;
