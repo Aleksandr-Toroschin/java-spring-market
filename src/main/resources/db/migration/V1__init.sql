@@ -1,3 +1,5 @@
+-- Products -----------------------------
+
 create table categories
 (
     id         bigserial primary key,
@@ -12,31 +14,27 @@ create table products
 (
     id          bigserial primary key,
     title       varchar(255),
-    cost        int,
+    cost        numeric(8, 2),
     category_id int,
     created_at  timestamp default current_timestamp,
     updated_at  timestamp default current_timestamp
 );
 insert into products (title, cost, category_id)
-values ('Bread', 25, 1),
-       ('Milk', 80, 1),
-       ('Cheese', 325, 1),
-       ('Cheese3', 725, 1),
-       ('Cheese5', 905, 1),
-       ('Cheese6', 305, 1),
-       ('Cheese6', 305, 1),
-       ('Cheese6', 305, 1),
-       ('Cheese6', 305, 1),
-       ('Cheese6', 305, 1),
-       ('Cheese6', 305, 1),
-       ('Cheese6', 305, 1),
-       ('Cheese6', 305, 1),
-       ('Cheese6', 305, 1),
-       ('Cheese7', 125, 1);
+values ('Bread', 25.1, 1),
+       ('Milk', 80.45, 1),
+       ('Cheese', 32.2, 1),
+       ('Cheese3', 72.5, 1),
+       ('Cheese5', 90.5, 1),
+       ('Cheese6', 3.05, 1),
+       ('Cheese8', 30.5, 1),
+       ('Cheese7', 12.89, 1);
+
+-- Orders -----------------------------
 
 create table order_items
 (
     id                bigserial primary key,
+    order_id          bigint references orders (id),
     product_id        bigint references products (id),
     quantity          int,
     price_per_product numeric(8, 2),
@@ -44,6 +42,18 @@ create table order_items
     created_at        timestamp default current_timestamp,
     updated_at        timestamp default current_timestamp
 );
+
+create table orders
+(
+    id             bigserial primary key,
+    sum            numeric(8, 2),
+    user_id        bigint,
+    payment_status varchar(60),
+    created_at     timestamp default current_timestamp,
+    updated_at     timestamp default current_timestamp
+);
+
+-- Users -----------------------------
 
 create table roles
 (

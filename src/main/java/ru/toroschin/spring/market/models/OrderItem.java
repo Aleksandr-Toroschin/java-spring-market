@@ -32,6 +32,10 @@ public class OrderItem {
     @JoinColumn(name = "product_id")
     private Product product;
 
+    @ManyToOne
+    @JoinColumn(name = "order_id")
+    private Order order;
+
     @Column(name = "created_at")
     @CreationTimestamp
     private LocalDateTime createdAt;
@@ -39,4 +43,16 @@ public class OrderItem {
     @Column(name = "updated_at")
     @UpdateTimestamp
     private LocalDateTime updatedAt;
+
+    public OrderItem(Product product) {
+        this.product = product;
+        this.quantity = 1;
+        this.pricePerProduct = product.getCost();
+        this.price = product.getCost();
+    }
+
+    public void incrementQuantity() {
+        quantity ++;
+        price = pricePerProduct.multiply(new BigDecimal(quantity));
+    }
 }

@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 import ru.toroschin.spring.market.models.Product;
 
 import javax.validation.constraints.Size;
+import java.math.BigDecimal;
 
 @NoArgsConstructor
 @Data
@@ -13,7 +14,7 @@ public class ProductDto {
 
     @Size(min = 3, message = "Название не должно быть меньше 3 символов")
     private String title;
-    private int cost;
+    private BigDecimal cost;
     private String categoryTitle;
 
     public ProductDto(Product product) {
@@ -22,5 +23,4 @@ public class ProductDto {
         cost = product.getCost();
         categoryTitle = product.getCategory().getTitle();
     }
-
 }

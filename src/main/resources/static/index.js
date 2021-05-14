@@ -48,7 +48,7 @@ angular.module('app', ['ngStorage']).controller('indexController', function ($sc
 
     $scope.addProductInCart = function (id) {
         $http.post(contextPath + '/api/v1/cart/' + id)
-            .then(function (response) {
+            .then(function () {
                 $scope.showCart();
                 console.log("Ok");
             });
@@ -61,7 +61,7 @@ angular.module('app', ['ngStorage']).controller('indexController', function ($sc
             params: {
                 id: id
             }
-        }).then(function (response) {
+        }).then(function () {
             $scope.showCart();
         });
     };
@@ -70,8 +70,10 @@ angular.module('app', ['ngStorage']).controller('indexController', function ($sc
         $http({
             url: contextPath + '/api/v1/cart/clear',
             method: 'DELETE'
-        }).then(function (response) {
-            $scope.showCart();
+        }).then(function () {
+            $scope.cartProducts = null;
+            $scope.sum = null;
+            // $scope.showCart();
         });
     };
 
@@ -105,6 +107,7 @@ angular.module('app', ['ngStorage']).controller('indexController', function ($sc
     };
 
     $scope.tryToLogout = function () {
+        $scope.clearCart();
         $scope.clearUser();
     };
 
@@ -112,6 +115,10 @@ angular.module('app', ['ngStorage']).controller('indexController', function ($sc
         delete $localStorage.marketCurrentUser;
         $http.defaults.headers.common.Authorization = '';
         $scope.login = '';
+    };
+
+    $scope.showProfile = function() {
+        alert($scope.login);
     };
 
     if ($localStorage.marketCurrentUser) {

@@ -18,13 +18,15 @@
         <div class="container-fluid">
             <h2>Market</h2>
             <form class="d-flex" ng-show="!isUserLoggedIn()" ng-submit="tryToAuth()">
-                <input class="form-control me-2" ng-model="user.username" type="text" placeholder="Login" aria-label="Login">
-                <input class="form-control me-2" ng-model="user.password" type="password" placeholder="Password" aria-label="Password">
+                <input class="form-control me-2" ng-model="user.username" type="text" placeholder="Login"
+                       aria-label="Login">
+                <input class="form-control me-2" ng-model="user.password" type="password" placeholder="Password"
+                       aria-label="Password">
                 <button class="btn btn-outline-success" type="submit">Login</button>
             </form>
             <div class="d-flex" ng-if="isUserLoggedIn()">
                 <span class="col-form-label" style="margin-right: 5px">{{login}}</span>
-                <button class="btn btn-outline-success">Profile</button>
+                <button class="btn btn-outline-success" ng-click="showProfile()">Profile</button>
                 <button class="btn btn-outline-success" ng-click="tryToLogout()">Log out</button>
             </div>
         </div>
@@ -74,32 +76,46 @@
     <button class="btn btn-primary" ng-click="showProducts(1)">Refresh</button>
     <a class="btn btn-success" href={{addProductPage}}>Добавить товар</a>
 
-    <br>
-    <H2>Корзина (сумма={{sum}})</H2>
-    <table class="table">
-        <thead>
-        <tr>
-            <th>ID</th>
-            <th>Категория</th>
-            <th>Наименование</th>
-            <th>Цена</th>
-            <th>Cart</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr ng-repeat="p in cartProducts.products">
-            <td>{{p.id}}</td>
-            <td>{{p.categoryTitle}}</td>
-            <td>{{p.title}}</td>
-            <td>{{p.cost}}</td>
-            <td>
-                <button class="btn btn-danger" ng-click="deleteProductFromCart(p.id)">Удалить из корзины</button>
-            </td>
-        </tr>
-        </tbody>
-    </table>
-    <button class="btn btn-danger" ng-click="clearCart()">Очистить корзину</button>
-
+    <div ng-if="isUserLoggedIn()">
+        <H2>Корзина</H2>
+        <table class="table">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Категория</th>
+                <th>Наименование</th>
+                <th>Цена</th>
+                <th>Количество</th>
+                <th>Сумма</th>
+                <th>Cart</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="oi in cartProducts.items">
+                <td>{{oi.productDto.id}}</td>
+                <td>{{oi.productDto.categoryTitle}}</td>
+                <td>{{oi.productDto.title}}</td>
+                <td>{{oi.pricePerProduct}}</td>
+                <td>{{oi.quantity}}</td>
+                <td>{{oi.price}}</td>
+                <td>
+                    <button class="btn btn-danger" ng-click="deleteProductFromCart(oi.productDto.id)">Удалить из
+                        корзины
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td style="font-weight: bold">Итого</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td style="font-weight: bold">{{sum}}</td>
+            </tr>
+            </tbody>
+        </table>
+        <button class="btn btn-danger" ng-click="clearCart()">Очистить корзину</button>
+    </div>
 </div>
 
 <br>
