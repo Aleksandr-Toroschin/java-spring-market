@@ -1,17 +1,15 @@
-angular.module('app', ['ngStorage']).controller('indexController', function ($scope, $http, $location, $localStorage) {
+angular.module('app', ['ngStorage']).controller('ordersController', function ($scope, $http, $location, $localStorage) {
     const contextPath = '/market';
 
-    $scope.showProducts = function (page) {
-        $scope.addProductPage = contextPath + '/add_product.html';
-        $scope.infoPage = contextPath + '/api/v1/products/';
+    $scope.showOrders = function (page) {
         $http({
-            url: contextPath + '/api/v1/products',
+            url: contextPath + '/api/v1/orders',
             method: 'GET',
             params: {
                 p: page
             }
         }).then(function (response) {
-            $scope.productsPage = response.data;
+            $scope.ordersPage = response.data;
 
             let minPageIndex = page - 2;
             if (minPageIndex < 1) {
@@ -19,8 +17,8 @@ angular.module('app', ['ngStorage']).controller('indexController', function ($sc
             }
 
             let maxPageIndex = page + 2;
-            if (maxPageIndex > $scope.productsPage.totalPages) {
-                maxPageIndex = $scope.productsPage.totalPages;
+            if (maxPageIndex > $scope.ordersPage.totalPages) {
+                maxPageIndex = $scope.ordersPage.totalPages;
             }
 
             $scope.paginationArray = $scope.generatePagesIndexes(minPageIndex, maxPageIndex);
@@ -34,52 +32,6 @@ angular.module('app', ['ngStorage']).controller('indexController', function ($sc
         }
         return arr;
     }
-
-    $scope.showCart = function () {
-        $http.get(contextPath + '/api/v1/cart')
-            .then(function (response) {
-                $scope.cartProducts = response.data;
-                $scope.sum = $scope.cartProducts.sum;
-                // for (let product of $scope.cartProducts) {
-                //     $scope.sum = $scope.sum + product.cost;
-                // }
-            });
-    };
-
-    $scope.showOrders = function () {
-        location.replace(contextPath + '/orders.html');
-    };
-
-    $scope.addProductInCart = function (id) {
-        $http.post(contextPath + '/api/v1/cart/' + id)
-            .then(function () {
-                $scope.showCart();
-                console.log("Ok");
-            });
-    };
-
-    $scope.deleteProductFromCart = function (id) {
-        $http({
-            url: contextPath + '/api/v1/cart',
-            method: 'DELETE',
-            params: {
-                id: id
-            }
-        }).then(function () {
-            $scope.showCart();
-        });
-    };
-
-    $scope.clearCart = function () {
-        $http({
-            url: contextPath + '/api/v1/cart/clear',
-            method: 'DELETE'
-        }).then(function () {
-            $scope.cartProducts = null;
-            $scope.sum = null;
-            // $scope.showCart();
-        });
-    };
 
     $scope.tryToAuth = function () {
         $scope.login = $scope.user.username;
@@ -125,19 +77,11 @@ angular.module('app', ['ngStorage']).controller('indexController', function ($sc
         alert($scope.login);
     };
 
-    $scope.saveOrder = function() {
-        $http.post(contextPath + '/api/v1/orders')
-            .then(function successCallback(response) {
-                console.log("Заказ сохранен");
-                $scope.clearCart();
-            });
-    };
-
     if ($localStorage.marketCurrentUser) {
         $scope.login = $localStorage.marketCurrentUser.username;
         $http.defaults.headers.common.Authorization = 'Bearer ' + $localStorage.marketCurrentUser.token;
     }
 
-    $scope.showProducts(1);
-    $scope.showCart();
+    $scope.mainPage = contextPath;
+    $scope.showOrders(1);
 });

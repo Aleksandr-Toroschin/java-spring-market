@@ -31,6 +31,17 @@ values ('Bread', 25.1, 1),
 
 -- Orders -----------------------------
 
+create table orders
+(
+    id             bigserial primary key,
+    sum            numeric(8, 2),
+    user_id        bigint,
+    order_status   int,
+    payment_status int,
+    created_at     timestamp default current_timestamp,
+    updated_at     timestamp default current_timestamp
+);
+
 create table order_items
 (
     id                bigserial primary key,
@@ -41,16 +52,6 @@ create table order_items
     price             numeric(8, 2),
     created_at        timestamp default current_timestamp,
     updated_at        timestamp default current_timestamp
-);
-
-create table orders
-(
-    id             bigserial primary key,
-    sum            numeric(8, 2),
-    user_id        bigint,
-    payment_status varchar(60),
-    created_at     timestamp default current_timestamp,
-    updated_at     timestamp default current_timestamp
 );
 
 -- Users -----------------------------

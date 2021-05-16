@@ -9,11 +9,11 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.0/angular.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ngStorage/0.3.11/ngStorage.min.js"></script>
-    <script src="index.js"></script>
-    <title>Market</title>
+    <script src="orders.js"></script>
+    <title>Market your orders</title>
 </head>
 <body>
-<div class="container" ng-controller="indexController">
+<div class="container" ng-controller="ordersController">
     <nav class="navbar navbar-light bg-light">
         <div class="container-fluid">
             <h2 href="/">Market</h2>
@@ -32,27 +32,43 @@
             </div>
         </div>
     </nav>
+    <h3>Заказы</h3>
     <table class="table">
         <thead>
         <tr>
             <th>ID</th>
-            <th>Категория</th>
-            <th>Title</th>
-            <th>Price</th>
-            <th>Cart</th>
+            <th>Сумма</th>
+            <th>Статус заказа</th>
+            <th>Статус оплаты</th>
+            <th>Дата создания</th>
+            <th></th>
         </tr>
         </thead>
         <tbody>
-        <tr ng-repeat="p in productsPage.content">
-            <td>{{p.id}}</td>
-            <td>{{p.categoryTitle}}</td>
-            <td>
-                <a href={{infoPage+p.id}}>{{p.title}}</a>
-            </td>
-            <td>{{p.cost}}</td>
-            <td>
-                <button class="btn btn-success" ng-click="addProductInCart(p.id)">Добавить в корзину</button>
-            </td>
+        <tr ng-repeat="o in ordersPage.content">
+            <td>{{o.id}}</td>
+            <td>{{o.sum}}</td>
+            <td>{{o.orderStatus}}</td>
+            <td>{{o.paymentStatus}}</td>
+            <td>{{o.createdAt}}</td>
+            <td><table class="table">
+                <thead>
+                <tr>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+        <tr ng-repeat="oi in o.orderItems">
+            <td>{{oi.quantity}}</td>
+            <td>{{oi.price}}</td>
+            <td>{{oi.productDto.title}}</td>
+            <td>{{oi.productDto.category}}</td>
+            <td>{{oi.pricePerProduct}}</td>
+        </tr></tbody></table></td>
         </tr>
         </tbody>
     </table>
@@ -74,52 +90,8 @@
         </ul>
     </nav>
 
-    <button class="btn btn-primary" ng-click="showProducts(1)">Refresh</button>
-    <a class="btn btn-success" href={{addProductPage}}>Добавить товар</a>
+    <a class="btn btn-primary" href={{mainPage}}>На главную страницу</a>
 
-    <div ng-if="isUserLoggedIn()">
-        <H2>Корзина</H2>
-        <table class="table">
-            <thead>
-            <tr>
-                <th>ID</th>
-                <th>Категория</th>
-                <th>Наименование</th>
-                <th>Цена</th>
-                <th>Количество</th>
-                <th>Сумма</th>
-                <th>Cart</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr ng-repeat="oi in cartProducts.items">
-                <td>{{oi.productDto.id}}</td>
-                <td>{{oi.productDto.categoryTitle}}</td>
-                <td>{{oi.productDto.title}}</td>
-                <td>{{oi.pricePerProduct}}</td>
-                <td>{{oi.quantity}}</td>
-                <td>{{oi.price}}</td>
-                <td>
-                    <button class="btn btn-danger" ng-click="deleteProductFromCart(oi.productDto.id)">Удалить из
-                        корзины
-                    </button>
-                </td>
-            </tr>
-            <tr>
-                <td style="font-weight: bold">Итого</td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td style="font-weight: bold">{{sum}}</td>
-            </tr>
-            </tbody>
-        </table>
-        <button class="btn btn-danger" ng-click="clearCart()">Очистить корзину</button>
-        <button class="btn btn-primary" ng-click="saveOrder()">Оформить заказ</button>
-    </div>
 </div>
-
-<br>
 </body>
 </html>

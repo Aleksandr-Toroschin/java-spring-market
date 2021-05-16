@@ -5,6 +5,8 @@ import org.springframework.stereotype.Component;
 import ru.toroschin.spring.market.error_handling.ResourceNotFoundException;
 import ru.toroschin.spring.market.models.OrderItem;
 import ru.toroschin.spring.market.models.Product;
+import ru.toroschin.spring.market.repositories.OrderItemRepository;
+import ru.toroschin.spring.market.repositories.OrderRepository;
 import ru.toroschin.spring.market.services.ProductService;
 
 import javax.annotation.PostConstruct;
@@ -17,6 +19,8 @@ import java.util.List;
 @Data
 public class Cart {
     private final ProductService productService;
+    private final OrderRepository orderRepository;
+    private final OrderItemRepository orderItemRepository;
     private List<OrderItem> items;
     private BigDecimal sum;
 
