@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html ng-app="app">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.0/angular.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ngStorage/0.3.11/ngStorage.min.js"></script>
+    <script src="orders.js"></script>
+    <title>Market your orders</title>
+</head>
+<body>
+<div class="container" ng-controller="ordersController">
+    <nav class="navbar navbar-light bg-light">
+        <div class="container-fluid">
+            <h2 href="/">Market</h2>
+            <form class="d-flex" ng-show="!isUserLoggedIn()" ng-submit="tryToAuth()">
+                <input class="form-control me-2" ng-model="user.username" type="text" placeholder="Login"
+                       aria-label="Login">
+                <input class="form-control me-2" ng-model="user.password" type="password" placeholder="Password"
+                       aria-label="Password">
+                <button class="btn btn-outline-success" type="submit">Login</button>
+            </form>
+            <div class="d-flex" ng-if="isUserLoggedIn()">
+                <span class="col-form-label" style="margin-right: 5px">{{login}}</span>
+                <button class="btn btn-outline-success" ng-click="showOrders()">Orders</button>
+                <button class="btn btn-outline-success" ng-click="showProfile()">Profile</button>
+                <button class="btn btn-outline-success" ng-click="tryToLogout()">Log out</button>
+            </div>
+        </div>
+    </nav>
+    <h3>Заказы</h3>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Сумма</th>
+            <th>Статус заказа</th>
+            <th>Статус оплаты</th>
+            <th>Дата создания</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="o in ordersPage.content">
+            <td>{{o.id}}</td>
+            <td>{{o.sum}}</td>
+            <td>{{o.orderStatus}}</td>
+            <td>{{o.paymentStatus}}</td>
+            <td>{{o.createdAt}}</td>
+            <td><table class="table">
+                <thead>
+                <tr>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+        <tr ng-repeat="oi in o.orderItems">
+            <td>{{oi.quantity}}</td>
+            <td>{{oi.price}}</td>
+            <td>{{oi.productDto.title}}</td>
+            <td>{{oi.productDto.category}}</td>
+            <td>{{oi.pricePerProduct}}</td>
+        </tr></tbody></table></td>
+        </tr>
+        </tbody>
+    </table>
+
+    <nav aria-label="Page navigation">
+        <ul class="pagination">
+            <li ng-class="productsPage.first ? 'page-item disabled' : 'page-item'">
+                <a class="page-link" ng-click="showProducts(productsPage.number)">Пред.</a>
+            </li>
+
+            <li ng-class="productsPage.number == pageIndex - 1 ? 'page-item active' : 'page-item'"
+                ng-repeat="pageIndex in paginationArray">
+                <a class="page-link" ng-click="showProducts(pageIndex)">{{pageIndex}}</a>
+            </li>
+
+            <li ng-class="productsPage.last ? 'page-item disabled' : 'page-item'">
+                <a class="page-link" ng-click="showProducts(productsPage.number + 2)">След.</a>
+            </li>
+        </ul>
+    </nav>
+
+    <a class="btn btn-primary" href={{mainPage}}>На главную страницу</a>
+
+</div>
+</body>
+</html>
