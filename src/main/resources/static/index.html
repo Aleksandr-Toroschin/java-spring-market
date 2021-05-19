@@ -77,7 +77,7 @@
     <button class="btn btn-primary" ng-click="showProducts(1)">Refresh</button>
     <a class="btn btn-success" href={{addProductPage}}>Добавить товар</a>
 
-    <div ng-if="isUserLoggedIn()">
+    <div ng-if="cartProducts.items.length > 0"  style="margin-top: 30px">
         <H2>Корзина</H2>
         <table class="table">
             <thead>
@@ -116,7 +116,15 @@
             </tbody>
         </table>
         <button class="btn btn-danger" ng-click="clearCart()">Очистить корзину</button>
-        <button class="btn btn-primary" ng-click="saveOrder()">Оформить заказ</button>
+    </div>
+    <div ng-if="(isUserLoggedIn()) && (cartProducts.items.length > 0)" style="margin-top: 30px">
+        <H2>Оформление заказа</H2>
+        <form class="mb3" ng-submit="saveOrder()">
+            <input class="form-control" ng-model="newOrder.address" type="text" placeholder="Адрес доставки" aria-label="Adress" name="address">
+            <input class="form-control" ng-model="newOrder.phone" type="text" placeholder="Телефон" aria-label="Phone" name="phone">
+            <input class="form-control" ng-model="newOrder.email" type="text" placeholder="Email" aria-label="Email" name="email">
+            <button class="btn btn-success" type="submit">Оформить заказ</button>
+        </form>
     </div>
 </div>
 

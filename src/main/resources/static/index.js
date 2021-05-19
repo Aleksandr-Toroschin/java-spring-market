@@ -126,11 +126,15 @@ angular.module('app', ['ngStorage']).controller('indexController', function ($sc
     };
 
     $scope.saveOrder = function() {
-        $http.post(contextPath + '/api/v1/orders')
-            .then(function successCallback(response) {
+        // console.log($scope.newOrder.address);
+        $http.post(contextPath + '/api/v1/orders', $scope.newOrder)
+        .then(function successCallback(response) {
                 console.log("Заказ сохранен");
                 $scope.clearCart();
-            });
+            }, function errorCallback(response, request) {
+                alert("какие-то ошибки в запросе ");
+            }
+            );
     };
 
     if ($localStorage.marketCurrentUser) {
