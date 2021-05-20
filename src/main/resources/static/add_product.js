@@ -1,4 +1,4 @@
-angular.module('app', []).controller('addController', function ($scope, $http) {
+angular.module('app', ['ngStorage']).controller('addController', function ($scope, $http, $location, $localStorage) {
     // const contextPath = 'http://localhost:8189/market';
     const contextPath = '/market';
 
@@ -9,13 +9,18 @@ angular.module('app', []).controller('addController', function ($scope, $http) {
     };
 
     $scope.addProduct = function() {
-        $http.post(contextPath + '/api/v1/products', $scope.newProduct)
+        $http.post(contextPath + '/api/v1/products/add', $scope.newProduct)
             .then(function successCallback(response) {
                 location.replace(contextPath);
             }, function errorCallback(response) {
                 alert('Error!');
             });
     };
+
+    // if ($localStorage.marketCurrentUser) {
+    //     $scope.login = $localStorage.marketCurrentUser.username;
+    //     $http.defaults.headers.common.Authorization = 'Bearer ' + $localStorage.marketCurrentUser.token;
+    // }
 
     $scope.init();
 });

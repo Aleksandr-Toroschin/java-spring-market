@@ -13,7 +13,10 @@ import ru.toroschin.spring.market.error_handling.InvalidDataException;
 import ru.toroschin.spring.market.error_handling.ResourceNotFoundException;
 import ru.toroschin.spring.market.models.Product;
 import ru.toroschin.spring.market.services.ProductService;
+import ru.toroschin.spring.market.services.UserService;
 
+import java.security.Principal;
+import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -23,6 +26,7 @@ import java.util.stream.Collectors;
 @Slf4j
 public class ProductsController {
     private final ProductService productService;
+    private final UserService userService;
 
     @GetMapping
     public Page<ProductDto> getAllProducts(@RequestParam(defaultValue = "1") int p) {
@@ -36,12 +40,21 @@ public class ProductsController {
         return new ProductDto(product.orElseThrow(() -> new ResourceNotFoundException("Продукт не найден, id: "+id)));
     }
 
-    @PostMapping
+    @PostMapping("/add")
     public ProductDto createProduct(@RequestBody @Validated ProductDto productDto, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             throw new InvalidDataException(bindingResult.getAllErrors().stream().map(ObjectError::getDefaultMessage).collect(Collectors.toList()));
         } else {
             return productService.saveDto(productDto);
+        }
+    }
+
+    @PostMapping("/addFromFile")
+    public List<ProductDto> createProductsFromFile(@RequestBody @Validated ProductDto productDto, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            throw new InvalidDataException(bindingResult.getAllErrors().stream().map(ObjectError::getDefaultMessage).collect(Collectors.toList()));
+        } else {
+            return List.of(productService.saveDto(productDto));
         }
     }
 

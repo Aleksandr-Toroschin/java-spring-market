@@ -149,7 +149,7 @@ values (1, 1),
        (3, 9);
 
 insert into users_authorities (user_id, authority_id)
-values (2, 4),
+values (2, 3),
        (2, 5),
        (3, 4);
 
