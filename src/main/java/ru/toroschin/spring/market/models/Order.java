@@ -2,6 +2,7 @@ package ru.toroschin.spring.market.models;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import ru.toroschin.spring.market.utils.OrderStatus;
@@ -26,7 +27,16 @@ public class Order {
     private BigDecimal sum;
 
     @Column(name = "user_id")
-    private Long user_id;
+    private Long userId;
+
+    @Column(name = "address")
+    private String address;
+
+    @Column(name = "phone")
+    private String phone;
+
+    @Column(name = "email")
+    private String email;
 
     @Column(name = "order_status")
     private int orderStatus;
@@ -43,10 +53,11 @@ public class Order {
     private LocalDateTime updatedAt;
 
     @OneToMany(mappedBy = "order")
+    @Cascade(value = org.hibernate.annotations.CascadeType.ALL)
     private List<OrderItem> orderItems;
 
     public Order(Long userId, BigDecimal sum, OrderStatus orderStatus, PaymentStatus paymentStatus) {
-        this.user_id = userId;
+        this.userId = userId;
         this.sum = sum;
         this.orderStatus = orderStatus.getValue();
         this.paymentStatus = paymentStatus.getValue();

@@ -9,4 +9,5 @@ import ru.toroschin.spring.market.models.Order;
 @Repository
 public interface OrderRepository extends JpaRepository<Order, Long> {
     Page<Order> findAllBy(Pageable pageable);
+    Page<Order> findAllByUserId(Pageable pageable, Long user_id);
 }

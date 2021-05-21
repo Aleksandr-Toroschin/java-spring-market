@@ -1,9 +1,13 @@
 angular.module('app', ['ngStorage']).controller('indexController', function ($scope, $http, $location, $localStorage) {
     const contextPath = '/market';
 
-    $scope.showProducts = function (page) {
+    $scope.init = function () {
         $scope.addProductPage = contextPath + '/add_product.html';
         $scope.infoPage = contextPath + '/api/v1/products/';
+        $scope.registrationPage = contextPath + '/registration.html';
+    };
+
+    $scope.showProducts = function (page) {
         $http({
             url: contextPath + '/api/v1/products',
             method: 'GET',
@@ -126,11 +130,14 @@ angular.module('app', ['ngStorage']).controller('indexController', function ($sc
     };
 
     $scope.saveOrder = function() {
-        $http.post(contextPath + '/api/v1/orders')
-            .then(function successCallback(response) {
+        $http.post(contextPath + '/api/v1/orders', $scope.newOrder)
+        .then(function successCallback(response) {
                 console.log("Заказ сохранен");
                 $scope.clearCart();
-            });
+            }, function errorCallback(response, request) {
+                alert("какие-то ошибки в запросе ");
+            }
+            );
     };
 
     if ($localStorage.marketCurrentUser) {
@@ -138,6 +145,7 @@ angular.module('app', ['ngStorage']).controller('indexController', function ($sc
         $http.defaults.headers.common.Authorization = 'Bearer ' + $localStorage.marketCurrentUser.token;
     }
 
+    $scope.init();
     $scope.showProducts(1);
     $scope.showCart();
 });

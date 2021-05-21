@@ -4,6 +4,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import ru.toroschin.spring.market.dtos.NewUserDto;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -49,5 +50,11 @@ public class User {
     @Column(name = "updated_at")
     @UpdateTimestamp
     private LocalDateTime updatedAt;
+
+    public User(NewUserDto newUserDto) {
+        this.name = newUserDto.getUserName();
+        this.password = newUserDto.getPassword();
+        this.email = newUserDto.getEmail();
+    }
 
 }

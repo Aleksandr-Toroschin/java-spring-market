@@ -38,8 +38,8 @@
         <tr>
             <th>ID</th>
             <th>Сумма</th>
-            <th>Статус заказа</th>
-            <th>Статус оплаты</th>
+            <th>Адрес доставки</th>
+            <th>Телефон</th>
             <th>Дата создания</th>
             <th></th>
         </tr>
@@ -48,8 +48,8 @@
         <tr ng-repeat="o in ordersPage.content">
             <td>{{o.id}}</td>
             <td>{{o.sum}}</td>
-            <td>{{o.orderStatus}}</td>
-            <td>{{o.paymentStatus}}</td>
+            <td>{{o.address}}</td>
+            <td>{{o.phone}}</td>
             <td>{{o.createdAt}}</td>
             <td><table class="table">
                 <thead>

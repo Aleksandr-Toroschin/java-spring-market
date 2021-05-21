@@ -36,6 +36,9 @@ create table orders
     id             bigserial primary key,
     sum            numeric(8, 2),
     user_id        bigint,
+    address varchar(255),
+    phone varchar(15),
+    email varchar (55),
     order_status   int,
     payment_status int,
     created_at     timestamp default current_timestamp,
@@ -146,7 +149,7 @@ values (1, 1),
        (3, 9);
 
 insert into users_authorities (user_id, authority_id)
-values (2, 4),
+values (2, 3),
        (2, 5),
        (3, 4);
 

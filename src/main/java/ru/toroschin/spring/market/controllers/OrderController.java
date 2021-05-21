@@ -5,8 +5,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.web.bind.annotation.*;
 import ru.toroschin.spring.market.dtos.OrderDto;
+import ru.toroschin.spring.market.dtos.OrderParamsDto;
 import ru.toroschin.spring.market.models.Order;
-import ru.toroschin.spring.market.models.Product;
 import ru.toroschin.spring.market.services.OrderService;
 
 import java.security.Principal;
@@ -19,14 +19,14 @@ public class OrderController {
     private final OrderService orderService;
 
     @GetMapping
-    public Page<OrderDto> showOrders(@RequestParam(defaultValue = "1") int p) {
-        Page<Order> ordersPage = orderService.findPage(p-1, 5);
+    public Page<OrderDto> showOrders(@RequestParam(defaultValue = "1") int p, Principal principal) {
+        Page<Order> ordersPage = orderService.findPage(p-1, 5, principal.getName());
         return new PageImpl<>(ordersPage.getContent().stream().map(OrderDto::new).collect(Collectors.toList()), ordersPage.getPageable(), ordersPage.getTotalElements());
     }
 
     @PostMapping
-    public void placeAnOrder(Principal principal) {
-        orderService.placeAnOrder(principal.getName());
+    public void createNewOrder(@RequestBody OrderParamsDto orderParamsDto, Principal principal) {
+        orderService.createNewOrder(principal.getName(), orderParamsDto);
     }
 
     @GetMapping("/{id}")
