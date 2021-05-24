@@ -1,0 +1,57 @@
+    <h3>Заказы</h3>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Сумма</th>
+            <th>Адрес доставки</th>
+            <th>Телефон</th>
+            <th>Дата создания</th>
+            <th>Состав заказа</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="o in ordersPage.content">
+            <td>{{o.id}}</td>
+            <td>{{o.sum}}</td>
+            <td>{{o.address}}</td>
+            <td>{{o.phone}}</td>
+            <td>{{o.createdAt}}</td>
+            <td><table class="table">
+                <thead>
+                <tr>
+                    <th>Количество</th>
+                    <th>Цена</th>
+                    <th>Наименование</th>
+                    <th>Категория</th>
+                    <th>Сумма</th>
+                </tr>
+                </thead>
+                <tbody>
+        <tr ng-repeat="oi in o.orderItems">
+            <td>{{oi.quantity}}</td>
+            <td>{{oi.pricePerProduct}}</td>
+            <td>{{oi.productDto.title}}</td>
+            <td>{{oi.productDto.categoryTitle}}</td>
+            <td>{{oi.price}}</td>
+        </tr></tbody></table></td>
+        </tr>
+        </tbody>
+    </table>
+
+    <nav aria-label="Page navigation">
+        <ul class="pagination">
+            <li ng-class="productsPage.first ? 'page-item disabled' : 'page-item'">
+                <a class="page-link" ng-click="showProducts(productsPage.number)">Пред.</a>
+            </li>
+
+            <li ng-class="productsPage.number == pageIndex - 1 ? 'page-item active' : 'page-item'"
+                ng-repeat="pageIndex in paginationArray">
+                <a class="page-link" ng-click="showProducts(pageIndex)">{{pageIndex}}</a>
+            </li>
+
+            <li ng-class="productsPage.last ? 'page-item disabled' : 'page-item'">
+                <a class="page-link" ng-click="showProducts(productsPage.number + 2)">След.</a>
+            </li>
+        </ul>
+    </nav>
