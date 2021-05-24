@@ -1,5 +1,4 @@
-angular.module('app', []).controller('registrationController', function ($scope, $http) {
-    // const contextPath = 'http://localhost:8189/market';
+angular.module('app').controller('registrationController', function ($scope, $http) {
     const contextPath = '/market';
 
     $scope.init = function () {

@@ -1,0 +1,17 @@
+<h1>Добавить новый товар</h1>
+<form novalidate ng-submit="addProduct()">
+    <div class="mb-3">
+        <label for="categoryField" class="form-label">Категория</label>
+        <input type="text" class="form-control" id="categoryField" name="category" ng-model="newProduct.categoryTitle">
+    </div>
+    <div class="mb-3">
+        <label for="titleField" class="form-label">Наименование</label>
+        <input type="text" class="form-control" id="titleField" name="title" ng-model="newProduct.title">
+    </div>
+    <div class="mb-3">
+        <label for="costField" class="form-label">Цена</label>
+        <input type="number" class="form-control" id="costField" name="cost" ng-model="newProduct.cost">
+    </div>
+    <button type="submit" class="btn btn-primary">Добавить</button>
+</form>
+<a class="btn btn-primary" href={{mainPage}} style="margin-top: 30px">На главную страницу</a>

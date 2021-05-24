@@ -1,4 +1,4 @@
-angular.module('app', ['ngStorage']).controller('addController', function ($scope, $http, $location, $localStorage) {
+angular.module('app').controller('add_productController', function ($scope, $http, $location, $localStorage) {
     // const contextPath = 'http://localhost:8189/market';
     const contextPath = '/market';
 

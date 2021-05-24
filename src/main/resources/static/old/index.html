@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html ng-app="app">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.0/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.0/angular-route.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ngStorage/0.3.11/ngStorage.min.js"></script>
+    <script src="index.js"></script>
+    <title>Market</title>
+</head>
+<body>
+<div class="container" ng-controller="indexController">
+    <nav class="navbar navbar-light bg-light">
+        <div class="container-fluid">
+            <a href="/">Market</a>
+
+            <form class="d-flex" ng-show="!isUserLoggedIn()" ng-submit="tryToAuth()">
+                <input class="form-control me-2" ng-model="user.username" type="text" placeholder="Login"
+                       aria-label="Login">
+                <input class="form-control me-2" ng-model="user.password" type="password" placeholder="Password"
+                       aria-label="Password">
+                <div>
+                    <button class="btn btn-outline-success" type="submit">Login</button>
+                    <a href={{registrationPage}}>Регистрация</a>
+                </div>
+            </form>
+
+            <div class="d-flex" ng-if="isUserLoggedIn()">
+                <span class="col-form-label" style="margin-right: 5px">{{login}}</span>
+                <button class="btn btn-outline-success" ng-click="showOrders()">Orders</button>
+                <button class="btn btn-outline-success" ng-click="showProfile()">Profile</button>
+                <button class="btn btn-outline-success" ng-click="tryToLogout()">Log out</button>
+            </div>
+        </div>
+    </nav>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Категория</th>
+            <th>Title</th>
+            <th>Price</th>
+            <th>Cart</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="p in productsPage.content">
+            <td>{{p.id}}</td>
+            <td>{{p.categoryTitle}}</td>
+            <td>
+                <a href={{infoPage+p.id}}>{{p.title}}</a>
+            </td>
+            <td>{{p.cost}}</td>
+            <td>
+                <button class="btn btn-success" ng-click="addProductInCart(p.id)">Добавить в корзину</button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <nav aria-label="Page navigation">
+        <ul class="pagination">
+            <li ng-class="productsPage.first ? 'page-item disabled' : 'page-item'">
+                <a class="page-link" ng-click="showProducts(productsPage.number)">Пред.</a>
+            </li>
+
+            <li ng-class="productsPage.number == pageIndex - 1 ? 'page-item active' : 'page-item'"
+                ng-repeat="pageIndex in paginationArray">
+                <a class="page-link" ng-click="showProducts(pageIndex)">{{pageIndex}}</a>
+            </li>
+
+            <li ng-class="productsPage.last ? 'page-item disabled' : 'page-item'">
+                <a class="page-link" ng-click="showProducts(productsPage.number + 2)">След.</a>
+            </li>
+        </ul>
+    </nav>
+
+    <button class="btn btn-primary" ng-click="showProducts(1)">Refresh</button>
+    <a class="btn btn-success" href={{addProductPage}}>Добавить товар</a>
+
+    <div ng-if="cartProducts.items.length > 0" style="margin-top: 30px">
+        <H2>Корзина</H2>
+        <table class="table">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Категория</th>
+                <th>Наименование</th>
+                <th>Цена</th>
+                <th>Количество</th>
+                <th>Сумма</th>
+                <th>Cart</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="oi in cartProducts.items">
+                <td>{{oi.productDto.id}}</td>
+                <td>{{oi.productDto.categoryTitle}}</td>
+                <td>{{oi.productDto.title}}</td>
+                <td>{{oi.pricePerProduct}}</td>
+                <td>{{oi.quantity}}</td>
+                <td>{{oi.price}}</td>
+                <td>
+                    <button class="btn btn-danger" ng-click="deleteProductFromCart(oi.productDto.id)">Удалить из
+                        корзины
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td style="font-weight: bold">Итого</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td style="font-weight: bold">{{sum}}</td>
+            </tr>
+            </tbody>
+        </table>
+        <button class="btn btn-danger" ng-click="clearCart()">Очистить корзину</button>
+    </div>
+    <div ng-show="(isUserLoggedIn()) && (cartProducts.items.length > 0)" style="margin-top: 30px">
+        <H2>Оформление заказа</H2>
+        <form class="mb3" ng-submit="saveOrder()">
+            <input class="form-control" ng-model="newOrder.address" type="text" placeholder="Адрес доставки"
+                   aria-label="Adress" name="address" value="test">
+            <input class="form-control" ng-model="newOrder.phone" type="text" placeholder="Телефон" aria-label="Phone"
+                   name="phone" value="88888">
+            <input class="form-control" ng-model="newOrder.email" type="text" placeholder="Email" aria-label="Email"
+                   name="email" value="test">
+            <button class="btn btn-success" type="submit">Оформить заказ</button>
+        </form>
+    </div>
+</div>
+
+<br>
+</body>
+</html>
