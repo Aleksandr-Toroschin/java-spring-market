@@ -87,7 +87,6 @@ angular.module('app').controller('indexController', function ($scope, $http, $lo
         $scope.clearUser();
         $scope.cartProducts = null;
         $scope.ordersPage = null;
-        $routeProvider.navigate(['/']);
     };
 
     $scope.clearUser = function () {

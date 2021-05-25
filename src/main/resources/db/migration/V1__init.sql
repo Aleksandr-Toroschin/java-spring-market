@@ -37,7 +37,7 @@ create table orders
     sum            numeric(8, 2),
     user_id        bigint,
     address varchar(255),
-    phone varchar(15),
+    phone varchar(20),
     email varchar (55),
     order_status   int,
     payment_status int,
