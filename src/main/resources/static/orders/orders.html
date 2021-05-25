@@ -7,7 +7,7 @@
             <th>Адрес доставки</th>
             <th>Телефон</th>
             <th>Дата создания</th>
-            <th></th>
+            <th>Состав заказа</th>
         </tr>
         </thead>
         <tbody>
@@ -20,20 +20,20 @@
             <td><table class="table">
                 <thead>
                 <tr>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
+                    <th>Количество</th>
+                    <th>Цена</th>
+                    <th>Наименование</th>
+                    <th>Категория</th>
+                    <th>Сумма</th>
                 </tr>
                 </thead>
                 <tbody>
         <tr ng-repeat="oi in o.orderItems">
             <td>{{oi.quantity}}</td>
-            <td>{{oi.price}}</td>
-            <td>{{oi.productDto.title}}</td>
-            <td>{{oi.productDto.category}}</td>
             <td>{{oi.pricePerProduct}}</td>
+            <td>{{oi.productDto.title}}</td>
+            <td>{{oi.productDto.categoryTitle}}</td>
+            <td>{{oi.price}}</td>
         </tr></tbody></table></td>
         </tr>
         </tbody>

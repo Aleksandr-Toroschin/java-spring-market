@@ -39,5 +39,24 @@ angular.module('app').controller('productsController', function ($scope, $http, 
         return arr;
     }
 
+    $scope.addProductInCart = function (id) {
+        $http.post(contextPath + '/api/v1/cart/' + id)
+            .then(function () {
+                console.log("Ok");
+            });
+    };
+
+    $scope.isCartNotEmpty = function () {
+        $http.get(contextPath + '/api/v1/cart/count')
+            .then(function (response) {
+                console.log(response.data);
+                if (response.data>0) {
+                    return true;
+                } else {
+                    return false;
+                }
+            });
+    };
+
     $scope.showProducts(1);
 });

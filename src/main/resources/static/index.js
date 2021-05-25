@@ -85,6 +85,9 @@ angular.module('app').controller('indexController', function ($scope, $http, $lo
 
     $scope.tryToLogout = function () {
         $scope.clearUser();
+        $scope.cartProducts = null;
+        $scope.ordersPage = null;
+        $routeProvider.navigate(['/']);
     };
 
     $scope.clearUser = function () {
@@ -95,6 +98,24 @@ angular.module('app').controller('indexController', function ($scope, $http, $lo
 
     $scope.showProfile = function() {
         alert($scope.login);
+    };
+
+    $scope.isCartNotEmpty = function () {
+        console.log("проверяем");
+        if ($scope.isUserLoggedIn) {
+            console.log("пользователь есть");
+            $http.get(contextPath + '/api/v1/cart')
+                .then(function (response) {
+                    console.log("получен ответ");
+                    console.log(response.data);
+                    if (response.data.length > 0) {
+                        return true;
+                    } else {
+                        return false;
+                    }
+                });
+        }
+        return false;
     };
 
     if ($localStorage.marketCurrentUser) {

@@ -19,28 +19,25 @@
             <div class="container-fluid">
                 <div>
                     <a href="#!/">Market</a>
-                    <a href="#!/products">Каталог</a>
-                    <a href="#!/add_product">Добавить товар</a>
+                    <a class="btn btn-outline-success" href="#!/products">Каталог</a>
+                    <a class="btn btn-outline-success" href="#!/cart">Корзина</a>
                 </div>
                 <form class="d-flex" ng-show="!isUserLoggedIn()" ng-submit="tryToAuth()">
                     <input class="form-control me-2" ng-model="user.username" type="text" placeholder="Login"
                            aria-label="Login">
                     <input class="form-control me-2" ng-model="user.password" type="password" placeholder="Password"
                            aria-label="Password">
-                    <div>
-                        <button class="btn btn-outline-success" type="submit">Login</button>
-                        <a href="#!/registration">Регистрация</a>
-                    </div>
+                    <button class="btn btn-outline-success" type="submit">Login</button>
+                    <a class="btn btn-outline-success" href="#!/registration">Регистрация</a>
                 </form>
 
-                <div class="d-flex" ng-if="isUserLoggedIn()">
+                <div class="d-flex" ng-show="isUserLoggedIn()">
                     <span class="col-form-label" style="margin-right: 5px">{{login}}</span>
-                    <button class="btn btn-outline-success" ng-click="showCart()">Корзина</button>
-                    <button class="btn btn-outline-success" href="#!/orders">Заказы</button>
-<!--                    <button class="btn btn-outline-success" ng-click="showOrders()">Заказы</button>-->
-                    <button class="btn btn-outline-success" ng-click="showProfile()">Профиль</button>
-                    <button class="btn btn-outline-success" ng-click="tryToLogout()">Log out</button>
+                    <a class="btn btn-outline-success" href="#!/orders">Заказы</a>
+                    <a class="btn btn-outline-success" ng-click="showProfile()">Профиль</a>
+                    <a class="btn btn-outline-success" ng-click="tryToLogout()">Log out</a>
                 </div>
+
             </div>
         </nav>
     </div>

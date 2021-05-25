@@ -24,6 +24,6 @@ public class TimeKeeper {
         } else {
             timing.put(key, time);
         }
-        log.info("Статистика тайминга: " + timing);
+//        log.info("Статистика тайминга: " + timing);
     }
 }

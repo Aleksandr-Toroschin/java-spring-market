@@ -1,1 +1,53 @@
 <p></p>
+<div style="margin-top: 30px">
+    <H2>Корзина</H2>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Категория</th>
+            <th>Наименование</th>
+            <th>Цена</th>
+            <th>Количество</th>
+            <th>Сумма</th>
+            <th>Cart</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="oi in cartProducts.items">
+            <td>{{oi.productDto.id}}</td>
+            <td>{{oi.productDto.categoryTitle}}</td>
+            <td>{{oi.productDto.title}}</td>
+            <td>{{oi.pricePerProduct}}</td>
+            <td>{{oi.quantity}}</td>
+            <td>{{oi.price}}</td>
+            <td>
+                <button class="btn btn-danger" ng-click="deleteProductFromCart(oi.productDto.id)">Удалить из
+                    корзины
+                </button>
+            </td>
+        </tr>
+        <tr>
+            <td style="font-weight: bold">Итого</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td style="font-weight: bold">{{sum}}</td>
+        </tr>
+        </tbody>
+    </table>
+    <button class="btn btn-danger" ng-click="clearCart()">Очистить корзину</button>
+</div>
+<div ng-show="(isUserLoggedIn()) && (cartProducts.items.length > 0)" style="margin-top: 30px">
+    <H2>Оформление заказа</H2>
+    <form class="mb3" ng-submit="saveOrder()">
+        <input class="form-control" ng-model="newOrder.address" type="text" placeholder="Адрес доставки"
+               aria-label="Adress" name="address" value="test">
+        <input class="form-control" ng-model="newOrder.phone" type="text" placeholder="Телефон" aria-label="Phone"
+               name="phone" value="88888">
+        <input class="form-control" ng-model="newOrder.email" type="text" placeholder="Email" aria-label="Email"
+               name="email" value="test">
+        <button class="btn btn-success" type="submit">Оформить заказ</button>
+    </form>
+</div>
