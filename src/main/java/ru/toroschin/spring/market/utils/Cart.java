@@ -1,7 +1,12 @@
 package ru.toroschin.spring.market.utils;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import lombok.Data;
+import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Scope;
+import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Component;
+import org.springframework.web.context.WebApplicationContext;
 import ru.toroschin.spring.market.error_handling.ResourceNotFoundException;
 import ru.toroschin.spring.market.models.OrderItem;
 import ru.toroschin.spring.market.models.Product;
@@ -10,6 +15,7 @@ import ru.toroschin.spring.market.repositories.OrderRepository;
 import ru.toroschin.spring.market.services.ProductService;
 
 import javax.annotation.PostConstruct;
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -17,6 +23,9 @@ import java.util.List;
 
 @Component
 @Data
+@RequiredArgsConstructor
+@JsonAutoDetect
+@Scope(value = WebApplicationContext.SCOPE_SESSION, proxyMode = ScopedProxyMode.TARGET_CLASS)
 public class Cart {
     private final ProductService productService;
     private final OrderRepository orderRepository;
