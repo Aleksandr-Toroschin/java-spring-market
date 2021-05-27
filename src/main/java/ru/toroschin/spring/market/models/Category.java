@@ -15,6 +15,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 public class Category implements Serializable {
+    private static final long serialVersionUID = 8147169171849348114L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")

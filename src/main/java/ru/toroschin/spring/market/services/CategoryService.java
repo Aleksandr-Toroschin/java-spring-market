@@ -1,10 +1,14 @@
 package ru.toroschin.spring.market.services;
 
 import lombok.AllArgsConstructor;
+import org.springframework.context.annotation.Scope;
+import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Service;
+import org.springframework.web.context.WebApplicationContext;
 import ru.toroschin.spring.market.models.Category;
 import ru.toroschin.spring.market.repositories.CategoryRepository;
 
+import java.io.Serializable;
 import java.util.Optional;
 
 @Service
