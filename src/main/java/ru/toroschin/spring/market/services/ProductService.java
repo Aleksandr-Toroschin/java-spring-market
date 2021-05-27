@@ -1,9 +1,12 @@
 package ru.toroschin.spring.market.services;
 
 import lombok.AllArgsConstructor;
+import org.springframework.context.annotation.Scope;
+import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import org.springframework.web.context.WebApplicationContext;
 import ru.toroschin.spring.market.dtos.ProductDto;
 import ru.toroschin.spring.market.error_handling.ResourceNotFoundException;
 import ru.toroschin.spring.market.models.Category;
@@ -11,6 +14,7 @@ import ru.toroschin.spring.market.models.Product;
 import ru.toroschin.spring.market.repositories.ProductRepository;
 
 import javax.transaction.Transactional;
+import java.io.Serializable;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;

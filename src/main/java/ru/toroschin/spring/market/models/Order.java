@@ -9,6 +9,7 @@ import ru.toroschin.spring.market.utils.OrderStatus;
 import ru.toroschin.spring.market.utils.PaymentStatus;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -17,7 +18,8 @@ import java.util.List;
 @Table(name = "orders")
 @Data
 @NoArgsConstructor
-public class Order {
+public class Order implements Serializable {
+    private static final long serialVersionUID = 8147169171849348115L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")

@@ -4,7 +4,10 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 import ru.toroschin.spring.market.dtos.CartDto;
+import ru.toroschin.spring.market.services.CartService;
 import ru.toroschin.spring.market.utils.Cart;
+
+import java.math.BigDecimal;
 
 @RestController
 @RequiredArgsConstructor
@@ -12,11 +15,11 @@ import ru.toroschin.spring.market.utils.Cart;
 @Slf4j
 public class CartController {
     private final Cart cart;
+    private final CartService cartService;
 
     @PostMapping("/{id}")
     public void addProduct(@PathVariable Long id) {
-        cart.addProduct(id);
-        log.info("Добавлен продукт с id: " + id);
+        cartService.addProduct(id, cart);
     }
 
     @GetMapping
@@ -26,13 +29,19 @@ public class CartController {
 
     @DeleteMapping
     public void deleteProduct(@RequestParam Long id) {
-        cart.deleteProduct(id);
-        log.info("Удален продукт c id: " + id);
+        cartService.deleteProduct(id, cart);
+//        cart.deleteProduct(id);
     }
 
     @DeleteMapping("/clear")
     public void clearCart() {
-        cart.clearCart();
+        cartService.clearCart(cart);
+//        cart.clearCart();
     }
 
+    @GetMapping("/get")
+    public BigDecimal getSum() {
+        return cart.getSum();
+        // cartService.getSum(cart);
+    }
 }
