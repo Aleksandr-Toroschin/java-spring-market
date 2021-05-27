@@ -22,14 +22,7 @@ public class MarketApplication {
 	// *. *** Админка
 
 	// Домашнее задание:
-	// 1. При оформлении заказа нужно указать доп информацию: телефон, адрес доставки
-	// 2. Регистрация пользователей через отправку JSON
-	// {
-	//   "username": "bob",
-	//   "password": "123"
-	//   "email": "bob@gmail.com"
-	// }
-	// 3. *Исследовательская* Загрузка товаров из файла
+	// 1. Сделать из корзины сессионный бин
 
 	public static void main(String[] args) {
 		SpringApplication.run(MarketApplication.class, args);

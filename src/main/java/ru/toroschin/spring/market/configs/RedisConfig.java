@@ -5,7 +5,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
 
 @Configuration
-public class AppConfig {
+public class RedisConfig {
     @Bean
     public LettuceConnectionFactory connectionFactory() {
         return new LettuceConnectionFactory();

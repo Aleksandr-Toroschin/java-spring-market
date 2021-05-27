@@ -19,7 +19,6 @@ public class CartController {
 
     @PostMapping("/{id}")
     public void addProduct(@PathVariable Long id) {
-        cartService.setCart(cart);
         cartService.addProduct(id, cart);
     }
 
@@ -30,16 +29,19 @@ public class CartController {
 
     @DeleteMapping
     public void deleteProduct(@RequestParam Long id) {
-        cart.deleteProduct(id);
+        cartService.deleteProduct(id, cart);
+//        cart.deleteProduct(id);
     }
 
     @DeleteMapping("/clear")
     public void clearCart() {
-        cart.clearCart();
+        cartService.clearCart(cart);
+//        cart.clearCart();
     }
 
     @GetMapping("/get")
     public BigDecimal getSum() {
-        return cart.getSum(); // cartService.getSum(cart);
+        return cart.getSum();
+        // cartService.getSum(cart);
     }
 }
