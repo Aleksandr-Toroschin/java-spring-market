@@ -22,37 +22,11 @@ public class CartService {
         for (OrderItem item : cart.getItems()) {
             if (item.getProduct().getId().equals(id)) {
                 item.incrementQuantity();
-                recalculate(cart);
+                cart.recalculate();
                 return;
             }
         }
-
-        Product product = productService.findById(id).orElseThrow(() -> new ResourceNotFoundException("Продукт с id=" + id + "не найден"));
-        cart.getItems().add(new OrderItem(product));
-        recalculate(cart);
+        cart.addProduct(productService.findById(id).orElseThrow(() -> new ResourceNotFoundException("Продукт с id=" + id + "не найден")));
     }
 
-    public void deleteProduct(Long id, Cart cart) {
-        for (OrderItem item : cart.getItems()) {
-            if (item.getProduct().getId().equals(id)) {
-                cart.getItems().remove(item);
-                log.info("Удален продукт c id: " + id);
-                recalculate(cart);
-                return;
-            }
-        }
-    }
-
-    public void clearCart(Cart cart) {
-        cart.getItems().clear();
-        cart.setSum(BigDecimal.ZERO);
-    }
-
-    public void recalculate(Cart cart) {
-        BigDecimal sum = BigDecimal.ZERO;
-        for (OrderItem item : cart.getItems()) {
-            sum = sum.add(item.getPrice());
-        }
-        cart.setSum(sum);
-    }
 }

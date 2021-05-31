@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
 @Data
 @Table(name = "products")
 public class Product implements Serializable {
-    private static final long serialVersionUID = 8147169171849348113L;
+//    private static final long serialVersionUID = 8147169171849348113L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")

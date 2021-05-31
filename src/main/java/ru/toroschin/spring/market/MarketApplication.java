@@ -22,7 +22,7 @@ public class MarketApplication {
 	// *. *** Админка
 
 	// Домашнее задание:
-	// 1. Сделать из корзины сессионный бин
+	// 1. Добавить к магазину возможность выгрузки всех товаров, и отдельных товаров по id через SOAP сервис
 
 	public static void main(String[] args) {
 		SpringApplication.run(MarketApplication.class, args);

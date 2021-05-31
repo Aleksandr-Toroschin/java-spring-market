@@ -17,9 +17,8 @@ import java.time.LocalDateTime;
 @Data
 @NoArgsConstructor
 @Table(name = "order_items")
-@Scope(value = WebApplicationContext.SCOPE_SESSION, proxyMode = ScopedProxyMode.TARGET_CLASS)
 public class OrderItem implements Serializable {
-    private static final long serialVersionUID = 8147169171849348112L;
+//    private static final long serialVersionUID = 8147169171849348112L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
