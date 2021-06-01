@@ -1,8 +1,9 @@
-package ru.toroschin.spring.market.soap.config;
+package ru.toroschin.spring.market.configs;
 
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.ws.config.annotation.EnableWs;
@@ -29,28 +30,28 @@ public class SoapConfig {
         wsdl11Definition.setPortTypeName("CategoriesPort");
         wsdl11Definition.setLocationUri("/ws");
         wsdl11Definition.setTargetNamespace("http://www.toroschin.ru/spring/market/categories");
-        wsdl11Definition.setSchema(groupsSchema);
+        wsdl11Definition.setSchema(categoriesSchema());
         return wsdl11Definition;
     }
 
-    // http://localhost:8080/ws/products.wsdl
-    @Bean(name = "products")
-    public DefaultWsdl11Definition studentsWsdl11Definition(XsdSchema groupsSchema) {
-        DefaultWsdl11Definition wsdl11Definition = new DefaultWsdl11Definition();
-        wsdl11Definition.setPortTypeName("ProductsPort");
-        wsdl11Definition.setLocationUri("/ws");
-        wsdl11Definition.setTargetNamespace("http://www.toroschin.ru/spring/market/products");
-        wsdl11Definition.setSchema(groupsSchema);
-        return wsdl11Definition;
-    }
+//     http://localhost:8080/ws/products.wsdl
+//    @Bean(name = "products")
+//    public DefaultWsdl11Definition studentsWsdl11Definition(XsdSchema groupsSchema) {
+//        DefaultWsdl11Definition wsdl11Definition = new DefaultWsdl11Definition();
+//        wsdl11Definition.setPortTypeName("ProductsPort");
+//        wsdl11Definition.setLocationUri("/ws");
+//        wsdl11Definition.setTargetNamespace("http://www.toroschin.ru/spring/market/products");
+//        wsdl11Definition.setSchema(productsSchema());
+//        return wsdl11Definition;
+//    }
 
     @Bean
     public XsdSchema categoriesSchema() {
         return new SimpleXsdSchema(new ClassPathResource("categories.xsd"));
     }
 
-    @Bean
-    public XsdSchema productsSchema() {
-        return new SimpleXsdSchema(new ClassPathResource("products.xsd"));
-    }
+//    @Bean
+//    public XsdSchema productsSchema() {
+//        return new SimpleXsdSchema(new ClassPathResource("products.xsd"));
+//    }
 }

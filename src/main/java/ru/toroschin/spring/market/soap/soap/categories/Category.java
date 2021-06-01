@@ -8,7 +8,8 @@
 
 package ru.toroschin.spring.market.soap.soap.categories;
 
-import ru.toroschin.spring.market.soap.soap.products.Product;
+import ru.toroschin.spring.market.products.Product;
+import ru.toroschin.spring.market.soap.soap.products.*;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;

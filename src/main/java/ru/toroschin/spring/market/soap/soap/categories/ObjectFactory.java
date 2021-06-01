@@ -8,6 +8,8 @@
 
 package ru.toroschin.spring.market.soap.soap.categories;
 
+import ru.toroschin.spring.market.categories.GetCategoryByTitleRequest;
+
 import javax.xml.bind.annotation.XmlRegistry;
 
 
