@@ -29,14 +29,14 @@ public class CartController {
 
     @DeleteMapping
     public void deleteProduct(@RequestParam Long id) {
-        cartService.deleteProduct(id, cart);
-//        cart.deleteProduct(id);
+//        cartService.deleteProduct(id, cart);
+        cart.deleteProduct(id);
     }
 
     @DeleteMapping("/clear")
     public void clearCart() {
-        cartService.clearCart(cart);
-//        cart.clearCart();
+//        cartService.clearCart(cart);
+        cart.clearCart();
     }
 
     @GetMapping("/get")

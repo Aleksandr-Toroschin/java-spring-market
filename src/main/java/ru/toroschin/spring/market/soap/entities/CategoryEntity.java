@@ -1,9 +1,10 @@
-package ru.toroschin.spring.market.models;
+package ru.toroschin.spring.market.soap.entities;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import ru.toroschin.spring.market.models.Product;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -14,8 +15,7 @@ import java.util.List;
 @Table(name = "categories")
 @Data
 @NoArgsConstructor
-public class Category implements Serializable {
-//    private static final long serialVersionUID = 8147169171849348114L;
+public class CategoryEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -25,14 +25,6 @@ public class Category implements Serializable {
     private String title;
 
     @OneToMany(mappedBy = "category")
-    private List<Product> products;
-
-    @Column(name = "created_at")
-    @CreationTimestamp
-    private LocalDateTime createdAt;
-
-    @Column(name = "updated_at")
-    @UpdateTimestamp
-    private LocalDateTime updatedAt;
+    private List<ProductEntity> products;
 
 }
