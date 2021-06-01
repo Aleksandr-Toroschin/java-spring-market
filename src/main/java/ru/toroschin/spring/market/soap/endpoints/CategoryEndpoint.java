@@ -9,8 +9,8 @@ import org.springframework.ws.server.endpoint.annotation.Endpoint;
 import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
 import org.springframework.ws.server.endpoint.annotation.RequestPayload;
 import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
-import ru.toroschin.spring.market.categories.GetCategoryByTitleRequest;
 import ru.toroschin.spring.market.soap.services.CategorySoapService;
+import ru.toroschin.spring.market.soap.soap.categories.GetCategoryByTitleRequest;
 import ru.toroschin.spring.market.soap.soap.categories.GetCategoryByTitleResponse;
 
 @Endpoint
@@ -21,7 +21,7 @@ public class CategoryEndpoint {
     private final CategorySoapService categorySoapService;
 
     /*
-        Пример запроса: POST http://localhost:8189/market
+        Пример запроса: POST http://localhost:8189/market/ws
 
         <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
           xmlns:f="http://www.toroschin.ru/spring/market/categories">
@@ -38,7 +38,6 @@ public class CategoryEndpoint {
     @ResponsePayload
     @Transactional
     public GetCategoryByTitleResponse getCategoryByTitle(@RequestPayload GetCategoryByTitleRequest request) {
-        log.info("Запрос категории");
         GetCategoryByTitleResponse response = new GetCategoryByTitleResponse();
         response.setCategory(categorySoapService.getByTitle(request.getTitle()));
         return response;

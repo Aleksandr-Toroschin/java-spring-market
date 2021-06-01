@@ -25,7 +25,7 @@ public class SoapConfig {
 
     // http://localhost:8080/ws/categories.wsdl
     @Bean(name = "categories")
-    public DefaultWsdl11Definition groupsWsdl11Definition(XsdSchema groupsSchema) {
+    public DefaultWsdl11Definition groupsWsdl11Definition(XsdSchema categoriesSchema) {
         DefaultWsdl11Definition wsdl11Definition = new DefaultWsdl11Definition();
         wsdl11Definition.setPortTypeName("CategoriesPort");
         wsdl11Definition.setLocationUri("/ws");
@@ -34,24 +34,24 @@ public class SoapConfig {
         return wsdl11Definition;
     }
 
-//     http://localhost:8080/ws/products.wsdl
-//    @Bean(name = "products")
-//    public DefaultWsdl11Definition studentsWsdl11Definition(XsdSchema groupsSchema) {
-//        DefaultWsdl11Definition wsdl11Definition = new DefaultWsdl11Definition();
-//        wsdl11Definition.setPortTypeName("ProductsPort");
-//        wsdl11Definition.setLocationUri("/ws");
-//        wsdl11Definition.setTargetNamespace("http://www.toroschin.ru/spring/market/products");
-//        wsdl11Definition.setSchema(productsSchema());
-//        return wsdl11Definition;
-//    }
+    // http://localhost:8080/ws/products.wsdl
+    @Bean(name = "products")
+    public DefaultWsdl11Definition studentsWsdl11Definition(XsdSchema productsSchema) {
+        DefaultWsdl11Definition wsdl11Definition = new DefaultWsdl11Definition();
+        wsdl11Definition.setPortTypeName("ProductsPort");
+        wsdl11Definition.setLocationUri("/ws");
+        wsdl11Definition.setTargetNamespace("http://www.toroschin.ru/spring/market/products");
+        wsdl11Definition.setSchema(productsSchema());
+        return wsdl11Definition;
+    }
 
     @Bean
     public XsdSchema categoriesSchema() {
         return new SimpleXsdSchema(new ClassPathResource("categories.xsd"));
     }
 
-//    @Bean
-//    public XsdSchema productsSchema() {
-//        return new SimpleXsdSchema(new ClassPathResource("products.xsd"));
-//    }
+    @Bean
+    public XsdSchema productsSchema() {
+        return new SimpleXsdSchema(new ClassPathResource("products.xsd"));
+    }
 }

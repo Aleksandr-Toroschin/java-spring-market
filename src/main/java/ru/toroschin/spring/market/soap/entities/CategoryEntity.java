@@ -25,6 +25,6 @@ public class CategoryEntity implements Serializable {
     private String title;
 
     @OneToMany(mappedBy = "category")
-    private List<Product> products;
+    private List<ProductEntity> products;
 
 }

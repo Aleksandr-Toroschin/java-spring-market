@@ -16,7 +16,7 @@ public class CategorySoapService {
     public static final Function<CategoryEntity, Category> functionEntityToSoap = categoryEntity -> {
         Category category = new Category();
         category.setTitle(categoryEntity.getTitle());
-//        categoryEntity.getProducts().stream().map(ProductSoapService.functionEntityToSoap).forEach(p -> category.getProducts().add(p));
+        categoryEntity.getProducts().stream().map(ProductSoapService.functionEntityToSoap).forEach(p -> category.getProducts().add(p));
         return category;
     };
 
