@@ -2,6 +2,13 @@ server:
   port: 8189
   servlet:
     context-path: /market
+  ssl:
+    key-store-type: PKCS12
+    key-store: classpath:keystore/market.p12
+    key-store-password: market
+    key-alias: market
+#    прием только HTTPS-запросов:
+    enabled: true
 spring:
   datasource:
     driver-class-name: org.h2.Driver

@@ -26,6 +26,10 @@ public class MarketApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(MarketApplication.class, args);
+
+//		SpringApplication application = new SpringApplication(MarketApplication.class);
+//		application.setAdditionalProfiles("ssl");
+//		application.run(args);
 	}
 
 }
