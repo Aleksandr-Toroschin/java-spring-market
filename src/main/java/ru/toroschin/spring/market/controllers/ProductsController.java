@@ -4,6 +4,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.validation.annotation.Validated;
@@ -32,6 +34,12 @@ public class ProductsController {
     public Page<ProductDto> getAllProducts(@RequestParam(defaultValue = "1") int p) {
         Page<Product> productsPage = productService.findPage(p-1, 5);
         return new PageImpl<>(productsPage.getContent().stream().map(ProductDto::new).collect(Collectors.toList()), productsPage.getPageable(), productsPage.getTotalElements());
+    }
+
+    @GetMapping("/list")
+    public List<ProductDto> getAllProductsList(@RequestParam(defaultValue = "1") int p) {
+        Page<Product> productsPage = productService.findPage(p-1, 5);
+        return new PageImpl<>(productsPage.getContent().stream().map(ProductDto::new).collect(Collectors.toList()), productsPage.getPageable(), productsPage.getTotalElements()).getContent();
     }
 
     @GetMapping("/{id}")

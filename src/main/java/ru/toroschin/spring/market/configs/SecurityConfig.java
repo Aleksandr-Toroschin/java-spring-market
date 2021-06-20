@@ -29,7 +29,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/v1/users/registration/**").permitAll()
                 .antMatchers("/api/v1/orders/**").authenticated()
                 .antMatchers("/api/v1/products").permitAll()
-//                .antMatchers("/api/v1/products/add/**").hasAuthority("ADD_PRODUCT")
+                .antMatchers("/api/v1/products/add/**").hasAuthority("ADD_PRODUCT")
                 .antMatchers("/api/v1/cart/**").permitAll()
                 .antMatchers("/profile/**").authenticated()
                 .antMatchers("/h2-console/**").permitAll()
