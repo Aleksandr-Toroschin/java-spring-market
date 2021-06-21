@@ -17,7 +17,8 @@ angular.module('app').controller('cartController', function ($scope, $http, $loc
             url: contextPath + '/api/v1/cart',
             method: 'DELETE',
             params: {
-                id: id
+                id: id,
+                cartId: 'cart'
             }
         }).then(function () {
             $scope.showCart();
@@ -27,7 +28,10 @@ angular.module('app').controller('cartController', function ($scope, $http, $loc
     $scope.clearCart = function () {
         $http({
             url: contextPath + '/api/v1/cart/clear',
-            method: 'DELETE'
+            method: 'DELETE',
+            params: {
+                cartId: 'cart'
+            }
         }).then(function () {
             $scope.cartProducts = null;
             $scope.sum = null;

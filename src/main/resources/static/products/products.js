@@ -5,7 +5,7 @@ angular.module('app').controller('productsController', function ($scope, $http, 
         $scope.addProductPage = contextPath + '/add_product.html';
         $scope.infoPage = contextPath + '/api/v1/products/';
         $scope.registrationPage = contextPath + '/registration.html';
-    };
+    }
 
     $scope.showProducts = function (page) {
         $http({
@@ -29,7 +29,7 @@ angular.module('app').controller('productsController', function ($scope, $http, 
 
             $scope.paginationArray = $scope.generatePagesIndexes(minPageIndex, maxPageIndex);
         });
-    };
+    }
 
     $scope.generatePagesIndexes = function (startPage, endPage) {
         let arr = [];
@@ -40,11 +40,18 @@ angular.module('app').controller('productsController', function ($scope, $http, 
     }
 
     $scope.addProductInCart = function (id) {
-        $http.post(contextPath + '/api/v1/cart/' + id)
-            .then(function () {
-                console.log("Ok");
-            });
-    };
+        $http({
+            url: contextPath + '/api/v1/cart/add/',
+            method: 'GET',
+            params: {
+                prodId: id,
+                cartId: 'cart'
+            }
+        })
+        .then(function () {
+            console.log("Ok");
+        });
+    }
 
     $scope.isCartNotEmpty = function () {
         $http.get(contextPath + '/api/v1/cart/count')
@@ -56,7 +63,7 @@ angular.module('app').controller('productsController', function ($scope, $http, 
                     return false;
                 }
             });
-    };
+    }
 
     $scope.showProducts(1);
 });

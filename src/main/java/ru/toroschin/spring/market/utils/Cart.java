@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.WebApplicationContext;
+import ru.toroschin.spring.market.dtos.OrderItemDto;
 import ru.toroschin.spring.market.models.OrderItem;
 import ru.toroschin.spring.market.models.Product;
 
@@ -17,34 +18,36 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-@Component
 @Data
 @Slf4j
-@RequiredArgsConstructor
-@Scope(value = WebApplicationContext.SCOPE_SESSION, proxyMode = ScopedProxyMode.TARGET_CLASS)
 public class Cart implements Serializable {
-    private static final long serialVersionUID = 8147169171849348111L;
-
-    private List<OrderItem> items;
+    private List<OrderItemDto> items;
     private BigDecimal sum;
 
-    @PostConstruct
-    public void init() {
+    public Cart() {
         items = new ArrayList<>();
+        sum = BigDecimal.ZERO;
+    }
+
+    public boolean addProduct(Long productId) {
+        for (OrderItemDto item : items) {
+            if (item.getProductDto().getId().equals(productId)) {
+                item.incrementQuantity();
+                recalculate();
+                return true;
+            }
+        }
+        return false;
     }
 
     public void addProduct(Product product) {
-        items.add(new OrderItem(product));
+        items.add(new OrderItemDto(product));
         recalculate();
     }
 
-    public List<OrderItem> getOrderItems() {
-        return Collections.unmodifiableList(items);
-    }
-
     public void deleteProduct(Long id) {
-        for (OrderItem item : items) {
-            if (item.getProduct().getId().equals(id)) {
+        for (OrderItemDto item : items) {
+            if (item.getProductDto().getId().equals(id)) {
                 items.remove(item);
                 log.info("Удален продукт c id: " + id);
                 recalculate();
@@ -60,7 +63,7 @@ public class Cart implements Serializable {
 
     public void recalculate() {
         sum = BigDecimal.ZERO;
-        for (OrderItem item : items) {
+        for (OrderItemDto item : items) {
             sum = sum.add(item.getPrice());
         }
     }

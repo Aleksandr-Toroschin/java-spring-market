@@ -18,7 +18,6 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Table(name = "order_items")
 public class OrderItem implements Serializable {
-//    private static final long serialVersionUID = 8147169171849348112L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")

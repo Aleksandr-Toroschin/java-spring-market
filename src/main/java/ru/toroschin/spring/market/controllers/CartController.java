@@ -3,7 +3,6 @@ package ru.toroschin.spring.market.controllers;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
-import ru.toroschin.spring.market.dtos.CartDto;
 import ru.toroschin.spring.market.services.CartService;
 import ru.toroschin.spring.market.utils.Cart;
 
@@ -14,34 +13,30 @@ import java.math.BigDecimal;
 @RequestMapping("/api/v1/cart")
 @Slf4j
 public class CartController {
-    private final Cart cart;
     private final CartService cartService;
 
     @PostMapping("/{id}")
-    public void addProduct(@PathVariable Long id) {
-        cartService.addProduct(id, cart);
+    public void addProduct(@PathVariable Long id, @RequestParam String cartId) {
+        cartService.addProduct(id, cartId);
     }
 
     @GetMapping
-    public CartDto getCart() {
-        return new CartDto(cart);
+    public Cart getCart(@RequestParam String cartId) {
+        return cartService.getCurrentCart(cartId);
     }
 
     @DeleteMapping
-    public void deleteProduct(@RequestParam Long id) {
-//        cartService.deleteProduct(id, cart);
-        cart.deleteProduct(id);
+    public void deleteProduct(@RequestParam Long productId, @RequestParam String cartId) {
+        cartService.deleteProduct(productId, cartId);
     }
 
     @DeleteMapping("/clear")
-    public void clearCart() {
-//        cartService.clearCart(cart);
-        cart.clearCart();
+    public void clearCart(@RequestParam String cartId) {
+        cartService.clearCart(cartId);
     }
 
     @GetMapping("/get")
-    public BigDecimal getSum() {
-        return cart.getSum();
-        // cartService.getSum(cart);
+    public BigDecimal getSum(@RequestParam String cartId) {
+        return cartService.getCurrentCart(cartId).getSum();
     }
 }
