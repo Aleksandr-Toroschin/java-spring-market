@@ -11,10 +11,13 @@ import org.springframework.validation.ObjectError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ru.toroschin.spring.market.dtos.ProductDto;
+import ru.toroschin.spring.market.dtos.RemarkDto;
 import ru.toroschin.spring.market.error_handling.InvalidDataException;
 import ru.toroschin.spring.market.error_handling.ResourceNotFoundException;
 import ru.toroschin.spring.market.models.Product;
+import ru.toroschin.spring.market.models.Remark;
 import ru.toroschin.spring.market.services.ProductService;
+import ru.toroschin.spring.market.services.RemarkService;
 import ru.toroschin.spring.market.services.UserService;
 
 import java.security.Principal;
@@ -28,7 +31,6 @@ import java.util.stream.Collectors;
 @Slf4j
 public class ProductsController {
     private final ProductService productService;
-    private final UserService userService;
 
     @GetMapping
     public Page<ProductDto> getAllProducts(@RequestParam(defaultValue = "1") int p) {
@@ -46,6 +48,17 @@ public class ProductsController {
     public ProductDto getOneProduct(@PathVariable Long id) {
         Optional<Product> product = productService.findById(id);
         return new ProductDto(product.orElseThrow(() -> new ResourceNotFoundException("Продукт не найден, id: "+id)));
+    }
+
+    @GetMapping("/remarks/{id}")
+    public List<RemarkDto> getProductRemarks(@PathVariable Long id) {
+
+        return productService.findRemarks(id);
+    }
+
+    @PostMapping("/addremark")
+    public void addRemark(@RequestParam Long prodId, @RequestParam String content) {
+        productService.addRemark(prodId, content);
     }
 
     @PostMapping("/add")

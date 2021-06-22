@@ -26,18 +26,18 @@ public class OrderService {
     private final OrderRepository orderRepository;
     private final UserService userService;
     private final OrderItemService orderItemService;
-    private final Cart cart;
+    private final CartService cartService;
 
     @Transactional
     public Order createNewOrder(String userName, OrderParamsDto orderParamsDto) {
         Long userId = userService.findUserByUsername(userName).orElseThrow(() -> new ResourceNotFoundException("User not found by login " + userName)).getId();
-        Order order = new Order(userId, cart.getSum(), OrderStatus.PLACED, PaymentStatus.WAIT_PAY);
+        Order order = new Order(userId, cartService.getSum(orderParamsDto.getCartName()), OrderStatus.PLACED, PaymentStatus.WAIT_PAY);
         order.setAddress(orderParamsDto.getAddress());
         order.setPhone(orderParamsDto.getPhone());
         order.setEmail(orderParamsDto.getEmail());
         Order orderSaved = orderRepository.saveAndFlush(order);
         // TODO сделать привязку к OrderItems и сохранять только заказ, каскадно сохранятся OrderItems
-        orderItemService.saveAll(cart.getOrderItems(), orderSaved);
+        orderItemService.saveAll(cartService.getItems(orderParamsDto.getCartName()), orderSaved);
         return orderSaved;
     }
 

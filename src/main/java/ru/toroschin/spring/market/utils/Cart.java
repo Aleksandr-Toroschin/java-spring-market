@@ -67,4 +67,22 @@ public class Cart implements Serializable {
             sum = sum.add(item.getPrice());
         }
     }
+
+    public void merge(Cart another) {
+        for (OrderItemDto anotherItem : another.items) {
+            boolean merged = false;
+            for (OrderItemDto myItem : items) {
+                if (myItem.getProductDto().getId().equals(anotherItem.getProductDto().getId())) {
+                    myItem.changeQuantity(anotherItem.getQuantity());
+                    merged = true;
+                    break;
+                }
+            }
+            if (!merged) {
+                items.add(anotherItem);
+            }
+        }
+        recalculate();
+        another.clearCart();
+    }
 }

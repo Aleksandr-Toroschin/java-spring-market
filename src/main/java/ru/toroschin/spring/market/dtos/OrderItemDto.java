@@ -33,4 +33,9 @@ public class OrderItemDto {
         quantity ++;
         price = pricePerProduct.multiply(new BigDecimal(quantity));
     }
+
+    public void changeQuantity(int delta) {
+        this.quantity += delta;
+        this.price = this.pricePerProduct.multiply(BigDecimal.valueOf(this.quantity));
+    }
 }

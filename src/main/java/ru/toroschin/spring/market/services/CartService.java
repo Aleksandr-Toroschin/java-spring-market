@@ -6,8 +6,13 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import ru.toroschin.spring.market.dtos.OrderItemDto;
+import ru.toroschin.spring.market.dtos.StringDto;
 import ru.toroschin.spring.market.error_handling.ResourceNotFoundException;
 import ru.toroschin.spring.market.utils.Cart;
+
+import java.math.BigDecimal;
+import java.util.List;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -39,6 +44,10 @@ public class CartService {
         redisTemplate.opsForValue().set(PREF_CART_ID + cartId, cart);
     }
 
+    public void deleteCartFromRedis(String cartId) {
+        redisTemplate.delete(PREF_CART_ID + cartId);
+    }
+
     public void clearCart(String cartId) {
         Cart cart = getCurrentCart(cartId);
         cart.clearCart();
@@ -49,5 +58,37 @@ public class CartService {
         Cart cart = getCurrentCart(cartId);
         cart.deleteProduct(productId);
         save(cartId, cart);
+    }
+
+    public BigDecimal getSum(String cartId) {
+        Cart cart = getCurrentCart(cartId);
+        return cart.getSum();
+    }
+
+    public List<OrderItemDto> getItems(String cartId) {
+        Cart cart = getCurrentCart(cartId);
+        return cart.getItems();
+    }
+
+    public StringDto generateCartName() {
+        String uuid = null;
+        do {
+            uuid = UUID.randomUUID().toString();
+        } while (isCartExists(uuid));
+        return new StringDto(uuid);
+    }
+
+    public boolean isCartExists(String cartId) {
+        return redisTemplate.hasKey(PREF_CART_ID + cartId);
+    }
+
+    public StringDto merge(String userCartId, String guestCartId) {
+        Cart userCart = getCurrentCart(userCartId);
+        Cart guestCart = getCurrentCart(guestCartId);
+        userCart.merge(guestCart);
+        save(userCartId, userCart);
+//        save(guestCartId, guestCart);
+        deleteCartFromRedis(guestCartId);
+        return new StringDto(userCartId);
     }
 }

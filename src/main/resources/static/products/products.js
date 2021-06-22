@@ -1,9 +1,9 @@
-angular.module('app').controller('productsController', function ($scope, $http, $location, $localStorage) {
+angular.module('app').controller('productsController', function ($scope, $http, $location, $localStorage, $routeParams) {
     const contextPath = '/market';
 
     $scope.init = function () {
         $scope.addProductPage = contextPath + '/add_product.html';
-        $scope.infoPage = contextPath + '/api/v1/products/';
+        $scope.infoPage = contextPath + '/#!/product_info/';
         $scope.registrationPage = contextPath + '/registration.html';
     }
 
@@ -41,11 +41,11 @@ angular.module('app').controller('productsController', function ($scope, $http, 
 
     $scope.addProductInCart = function (id) {
         $http({
-            url: contextPath + '/api/v1/cart/add/',
-            method: 'GET',
+            url: contextPath + '/api/v1/cart/add',
+            method: 'POST',
             params: {
                 prodId: id,
-                cartId: 'cart'
+                cartName: $localStorage.marketCartId
             }
         })
         .then(function () {
@@ -65,5 +65,6 @@ angular.module('app').controller('productsController', function ($scope, $http, 
             });
     }
 
+    $scope.init();
     $scope.showProducts(1);
 });

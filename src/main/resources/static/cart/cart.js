@@ -2,8 +2,13 @@ angular.module('app').controller('cartController', function ($scope, $http, $loc
     const contextPath = '/market';
 
     $scope.showCart = function () {
-        $http.get(contextPath + '/api/v1/cart')
-            .then(function (response) {
+        $http({
+            url: contextPath + '/api/v1/cart',
+            method: 'GET',
+            params: {
+                cartName: $localStorage.marketCartId
+            }
+        }).then(function (response) {
                 $scope.cartProducts = response.data;
                 $scope.sum = $scope.cartProducts.sum;
                 // for (let product of $scope.cartProducts) {
@@ -17,8 +22,8 @@ angular.module('app').controller('cartController', function ($scope, $http, $loc
             url: contextPath + '/api/v1/cart',
             method: 'DELETE',
             params: {
-                id: id,
-                cartId: 'cart'
+                prodId: id,
+                cartName: $localStorage.marketCartId
             }
         }).then(function () {
             $scope.showCart();
@@ -30,7 +35,7 @@ angular.module('app').controller('cartController', function ($scope, $http, $loc
             url: contextPath + '/api/v1/cart/clear',
             method: 'DELETE',
             params: {
-                cartId: 'cart'
+                cartName: $localStorage.marketCartId
             }
         }).then(function () {
             $scope.cartProducts = null;
@@ -40,6 +45,7 @@ angular.module('app').controller('cartController', function ($scope, $http, $loc
     };
 
     $scope.saveOrder = function() {
+        $scope.newOrder.cartName = $localStorage.marketCartId;
         $http.post(contextPath + '/api/v1/orders', $scope.newOrder)
             .then(function successCallback(response) {
                     console.log("Заказ сохранен");
