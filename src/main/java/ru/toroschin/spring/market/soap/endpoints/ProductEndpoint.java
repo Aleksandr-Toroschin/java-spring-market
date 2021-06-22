@@ -7,7 +7,7 @@ import org.springframework.ws.server.endpoint.annotation.Endpoint;
 import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
 import org.springframework.ws.server.endpoint.annotation.RequestPayload;
 import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
-import ru.toroschin.spring.market.products.GetProductByIdRequest;
+import ru.toroschin.spring.market.soap.soap.products.GetProductByIdRequest;
 import ru.toroschin.spring.market.soap.services.ProductSoapService;
 import ru.toroschin.spring.market.soap.soap.categories.GetCategoryByTitleResponse;
 import ru.toroschin.spring.market.soap.soap.products.GetProductByIdResponse;

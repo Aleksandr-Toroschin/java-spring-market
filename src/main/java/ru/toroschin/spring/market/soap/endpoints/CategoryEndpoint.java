@@ -9,7 +9,7 @@ import org.springframework.ws.server.endpoint.annotation.Endpoint;
 import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
 import org.springframework.ws.server.endpoint.annotation.RequestPayload;
 import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
-import ru.toroschin.spring.market.categories.GetCategoryByTitleRequest;
+import ru.toroschin.spring.market.soap.soap.categories.GetCategoryByTitleRequest;
 import ru.toroschin.spring.market.soap.services.CategorySoapService;
 import ru.toroschin.spring.market.soap.soap.categories.GetCategoryByTitleResponse;
 
