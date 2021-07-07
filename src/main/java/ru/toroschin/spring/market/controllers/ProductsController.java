@@ -14,6 +14,9 @@ import ru.toroschin.spring.market.dtos.ProductDto;
 import ru.toroschin.spring.market.dtos.RemarkDto;
 import ru.toroschin.spring.market.error_handling.InvalidDataException;
 import ru.toroschin.spring.market.error_handling.ResourceNotFoundException;
+import ru.toroschin.spring.market.mappers.CategoryMapper;
+import ru.toroschin.spring.market.mappers.ProductMapper;
+import ru.toroschin.spring.market.models.Category;
 import ru.toroschin.spring.market.models.Product;
 import ru.toroschin.spring.market.models.Remark;
 import ru.toroschin.spring.market.services.ProductService;
@@ -21,6 +24,7 @@ import ru.toroschin.spring.market.services.RemarkService;
 import ru.toroschin.spring.market.services.UserService;
 
 import java.security.Principal;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -31,6 +35,8 @@ import java.util.stream.Collectors;
 @Slf4j
 public class ProductsController {
     private final ProductService productService;
+    private final ProductMapper productMapper;
+    private final CategoryMapper categoryMapper;
 
     @GetMapping
     public Page<ProductDto> getAllProducts(@RequestParam(defaultValue = "1") int p) {
@@ -87,5 +93,39 @@ public class ProductsController {
     @PutMapping
     public ProductDto updateProduct(@RequestBody ProductDto productDto) {
         return productService.update(productDto);
+    }
+
+    //  ДЗ 6 по архитектурам и шаблонам проектирования.
+
+    @GetMapping("/findById")
+    public ProductDto findById(@RequestParam Long id) throws SQLException {
+        return new ProductDto(productMapper.findById(id));
+    }
+
+    @GetMapping("/findAll")
+    public List<ProductDto> findAll() throws SQLException {
+        return productMapper.findAll().stream().map(ProductDto::new).collect(Collectors.toList());
+    }
+
+    @PostMapping("/save")
+    public ProductDto saveProduct(@RequestBody ProductDto productDto) {
+        try {
+            Product product = new Product();
+            product.setId(productDto.getId());
+            product.setTitle(productDto.getTitle());
+            product.setCost(productDto.getCost());
+            Optional<Category> category = categoryMapper.findByTitle(productDto.getCategoryTitle());
+            product.setCategory(category.orElseThrow(() -> new ResourceNotFoundException("Такой категории не найдено " + productDto.getCategoryTitle())));
+            productMapper.save(product);
+            return new ProductDto(product);
+        } catch (SQLException e) {
+            log.warn(e.getMessage());
+            return null;
+        }
+    }
+
+    @GetMapping("/delete")
+    public void delete(@RequestParam Long id) throws SQLException {
+        productMapper.delete(id);
     }
 }
