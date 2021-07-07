@@ -47,8 +47,8 @@ public class ProductService {
         product.setCost(productDto.getCost());
         Optional<Category> category = categoryService.findByTitle(productDto.getCategoryTitle());
         product.setCategory(category.orElseThrow(() -> new ResourceNotFoundException("Такой категории не найдено " + productDto.getCategoryTitle())));
-        productRepository.save(product);
-        return new ProductDto(product);
+        Product productSaved = productRepository.save(product);
+        return new ProductDto(productSaved);
     }
 
     @Transactional
@@ -58,7 +58,8 @@ public class ProductService {
         product.setCost(productDto.getCost());
         Optional<Category> category = categoryService.findByTitle(productDto.getCategoryTitle());
         product.setCategory(category.orElseThrow(() -> new ResourceNotFoundException("Такой категории не найдено " + productDto.getCategoryTitle())));
-        return new ProductDto(product);
+        Product productUpdated = productRepository.save(product);
+        return new ProductDto(productUpdated);
     }
 
     public void delete(Long id) {
