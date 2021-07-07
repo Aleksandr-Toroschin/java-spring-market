@@ -13,6 +13,10 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+
 @EnableWebSecurity
 @RequiredArgsConstructor
 @EnableAspectJAutoProxy
@@ -52,6 +56,23 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
+    }
+
+    @Bean
+    public Connection connection() {
+        return getH2Connection();
+    }
+
+    public Connection getH2Connection() {
+        try {
+            String url = "jdbc:h2:mem:mydatabase;MODE=PostgreSQL";
+            String name = "sa";
+            String pass = "";
+            return DriverManager.getConnection(url, name, pass);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
 }
