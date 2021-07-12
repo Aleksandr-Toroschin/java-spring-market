@@ -12,6 +12,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ru.toroschin.spring.market.dtos.ProductDto;
 import ru.toroschin.spring.market.dtos.RemarkDto;
+import ru.toroschin.spring.market.dtos.StringDto;
 import ru.toroschin.spring.market.error_handling.InvalidDataException;
 import ru.toroschin.spring.market.error_handling.ResourceNotFoundException;
 import ru.toroschin.spring.market.mappers.CategoryMapper;
@@ -127,5 +128,10 @@ public class ProductsController {
     @GetMapping("/delete")
     public void delete(@RequestParam Long id) throws SQLException {
         productMapper.delete(id);
+    }
+
+    @GetMapping("/test")
+    public ProductDto test() throws SQLException {
+        return new ProductDto();
     }
 }
