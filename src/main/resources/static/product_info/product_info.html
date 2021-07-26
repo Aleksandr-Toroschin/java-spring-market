@@ -1,0 +1,53 @@
+<p></p>
+<h3>Информация о товаре</h3>
+<table class="table">
+    <thead>
+    <tr>
+        <th></th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>ID</td>
+        <td>{{prod.id}}</td>
+    </tr>
+    <tr>
+        <td>Категория</td>
+        <td>{{prod.categoryTitle}}</td>
+    </tr>
+    <tr>
+        <td>Наименование</td>
+        <td>{{prod.title}}</td>
+    </tr>
+    <tr>
+        <td>Цена</td>
+        <td>{{prod.cost}}</td>
+    </tr>
+    </tbody>
+</table>
+
+<h3>Комментарии</h3>
+<table class="table">
+    <thead>
+    <tr>
+        <th>Дата</th>
+        <th>Сожержание</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="rem in remarks">
+        <td>{{rem.createdAt}}</td>
+        <td>{{rem.content}}</td>
+    </tr>
+    </tbody>
+</table>
+
+<h1>Добавить комментарий</h1>
+<form novalidate ng-submit="addRemark()">
+    <div class="mb-3">
+        <label for="remarkField" class="form-label">Комментарий</label>
+        <input type="text" class="form-control" id="remarkField" name="remark" ng-model="newRemark.content">
+    </div>
+    <button type="submit" class="btn btn-primary">Добавить</button>
+</form>

@@ -7,6 +7,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.web.context.WebApplicationContext;
+import ru.toroschin.spring.market.dtos.OrderItemDto;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -18,7 +19,6 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Table(name = "order_items")
 public class OrderItem implements Serializable {
-//    private static final long serialVersionUID = 8147169171849348112L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -59,5 +59,12 @@ public class OrderItem implements Serializable {
     public void incrementQuantity() {
         quantity ++;
         price = pricePerProduct.multiply(new BigDecimal(quantity));
+    }
+
+    public OrderItem(OrderItemDto orderItemDto) {
+        this.product = product;
+        this.quantity = 1;
+        this.pricePerProduct = product.getCost();
+        this.price = product.getCost();
     }
 }

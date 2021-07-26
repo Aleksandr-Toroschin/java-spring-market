@@ -15,7 +15,7 @@ create table products
     id          bigserial primary key,
     title       varchar(255),
     cost        numeric(8, 2),
-    category_id int,
+    category_id bigint,
     created_at  timestamp default current_timestamp,
     updated_at  timestamp default current_timestamp
 );
@@ -28,6 +28,17 @@ values ('Bread', 25.1, 1),
        ('Cheese6', 3.05, 1),
        ('Cheese8', 30.5, 1),
        ('Cheese7', 12.89, 1);
+
+create table prod_remarks (
+    id  bigserial primary key,
+    product_id  int,
+    content varchar(255),
+    created_at  timestamp default current_timestamp
+);
+
+insert into prod_remarks (product_id, content)
+values (1, 'Хороший хлеб'),
+    (1, 'Куплю еще');
 
 -- Orders -----------------------------
 

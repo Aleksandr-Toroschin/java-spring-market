@@ -1,11 +1,11 @@
-angular.module('app').controller('productsController', function ($scope, $http, $location, $localStorage) {
+angular.module('app').controller('productsController', function ($scope, $http, $location, $localStorage, $routeParams) {
     const contextPath = '/market';
 
     $scope.init = function () {
         $scope.addProductPage = contextPath + '/add_product.html';
-        $scope.infoPage = contextPath + '/api/v1/products/';
+        $scope.infoPage = contextPath + '/#!/product_info/';
         $scope.registrationPage = contextPath + '/registration.html';
-    };
+    }
 
     $scope.showProducts = function (page) {
         $http({
@@ -29,7 +29,7 @@ angular.module('app').controller('productsController', function ($scope, $http, 
 
             $scope.paginationArray = $scope.generatePagesIndexes(minPageIndex, maxPageIndex);
         });
-    };
+    }
 
     $scope.generatePagesIndexes = function (startPage, endPage) {
         let arr = [];
@@ -40,11 +40,18 @@ angular.module('app').controller('productsController', function ($scope, $http, 
     }
 
     $scope.addProductInCart = function (id) {
-        $http.post(contextPath + '/api/v1/cart/' + id)
-            .then(function () {
-                console.log("Ok");
-            });
-    };
+        $http({
+            url: contextPath + '/api/v1/cart/add',
+            method: 'POST',
+            params: {
+                prodId: id,
+                cartName: $localStorage.marketCartId
+            }
+        })
+        .then(function () {
+            console.log("Ok");
+        });
+    }
 
     $scope.isCartNotEmpty = function () {
         $http.get(contextPath + '/api/v1/cart/count')
@@ -56,7 +63,8 @@ angular.module('app').controller('productsController', function ($scope, $http, 
                     return false;
                 }
             });
-    };
+    }
 
+    $scope.init();
     $scope.showProducts(1);
 });

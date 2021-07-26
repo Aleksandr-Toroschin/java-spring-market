@@ -8,9 +8,11 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.WebApplicationContext;
 import ru.toroschin.spring.market.dtos.ProductDto;
+import ru.toroschin.spring.market.dtos.RemarkDto;
 import ru.toroschin.spring.market.error_handling.ResourceNotFoundException;
 import ru.toroschin.spring.market.models.Category;
 import ru.toroschin.spring.market.models.Product;
+import ru.toroschin.spring.market.models.Remark;
 import ru.toroschin.spring.market.repositories.ProductRepository;
 
 import javax.transaction.Transactional;
@@ -24,6 +26,7 @@ import java.util.stream.Collectors;
 public class ProductService {
     private final ProductRepository productRepository;
     private CategoryService categoryService;
+    private final RemarkService remarkService;
 
     public Page<Product> findPage(int page, int pageSize) {
         return productRepository.findAllBy(PageRequest.of(page, pageSize));
@@ -44,8 +47,8 @@ public class ProductService {
         product.setCost(productDto.getCost());
         Optional<Category> category = categoryService.findByTitle(productDto.getCategoryTitle());
         product.setCategory(category.orElseThrow(() -> new ResourceNotFoundException("Такой категории не найдено " + productDto.getCategoryTitle())));
-        productRepository.save(product);
-        return new ProductDto(product);
+        Product productSaved = productRepository.save(product);
+        return new ProductDto(productSaved);
     }
 
     @Transactional
@@ -55,10 +58,20 @@ public class ProductService {
         product.setCost(productDto.getCost());
         Optional<Category> category = categoryService.findByTitle(productDto.getCategoryTitle());
         product.setCategory(category.orElseThrow(() -> new ResourceNotFoundException("Такой категории не найдено " + productDto.getCategoryTitle())));
-        return new ProductDto(product);
+        Product productUpdated = productRepository.save(product);
+        return new ProductDto(productUpdated);
     }
 
     public void delete(Long id) {
         productRepository.deleteById(id);
+    }
+
+    public List<RemarkDto> findRemarks(Long id) {
+        List<Remark> remarks = remarkService.findAllForProduct(id);
+        return remarks.stream().map(RemarkDto::new).collect(Collectors.toList());
+    }
+
+    public void addRemark(Long id, String content) {
+        remarkService.addRemark(findById(id).get(), content);
     }
 }

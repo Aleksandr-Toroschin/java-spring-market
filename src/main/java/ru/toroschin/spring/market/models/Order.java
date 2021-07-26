@@ -19,7 +19,6 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 public class Order implements Serializable {
-//    private static final long serialVersionUID = 8147169171849348115L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
